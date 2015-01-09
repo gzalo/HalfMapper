@@ -13,12 +13,18 @@ For other platforms it can be compiled easily after installing the required libr
 
 ## Used libraries
 SDL for window and event management
+
 OpenGL and GLU for rendering
+
 GLEW for easy extension access
 
 ## TODO 
 Provide a better configuration file and interface
+
 Provide a better interface, allow for map position fine-tuning and disable certain maps
+
 Solving overlaps: c0a0c folds into itself
+
 Solving overlaps: elevator and "surface tension" pipe (after the dam) don't have a set height
+
 Hard code every missing "info_landmark" entities to improve the full map
