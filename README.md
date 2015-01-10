@@ -7,7 +7,7 @@ It allows for realtime rendering of the Black Mesa Research Facility.
 ## Download
 The latest binary (for Windows) can be downloaded here: http://gzalo.com/halfmapper_en/
 **It needs a Half Life installation** (at least the map folder and a couple of wads for textures)
-For other platforms it can be compiled easily after installing the required libraries
+For other platforms it can be compiled after installing the required libraries and doing the required changes
 
 ![Overlapping maps](http://i.imgur.com/BPebM.jpg)
 

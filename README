@@ -1,0 +1,16 @@
+HalfMapper by gzalo
+
+Before running, please edit the config file and correctly select the game folder (Half-life/valve/)
+If using the Steam version, the path should be Steam_Folder/SteamApps/common/Half-Life/valve/. 
+
+Controls:
+	Mouse: Camera view
+	WASD: Lateral movement
+	Q/E: Move up and down
+	Shift: Faster movement
+	Control: Slower movement
+	Escape: Quit
+	
+If you found a bug, please report it in the issues page, inside github. 
+
+Not tested under Linux, some headers and libraries have to be ommited (sdlmain and mingw32) and some header inclusions might be wrong!
