@@ -11,6 +11,8 @@ For other platforms it can be compiled after installing the required libraries a
 
 ![Overlapping maps](http://i.imgur.com/BPebM.jpg)
 
+Video showing the program http://www.youtube.com/watch?v=Hl2HbV3UbMs
+
 ## Used libraries
 SDL for window and event management
 
@@ -19,12 +21,10 @@ OpenGL and GLU for rendering
 GLEW for easy extension access
 
 ## TODO 
-Provide a better configuration file and interface
-
 Provide a better interface, allow for map position fine-tuning and disable certain maps
 
-Solving overlaps: c0a0c folds into itself
+Try to add other Black Mesa maps to expand the universe: Opposing Force, Blue Shift and Decay might be possible  
 
-Solving overlaps: elevator and "surface tension" pipe (after the dam) don't have a set height
+Give a way to automatically take screenshots of the top of the maps, to do easier map joins.
 
-Hard code every missing "info_landmark" entities to improve the full map
+Hard code every missing "info_landmark" matching entities to improve the full map (for instance elevator and "surface tension" pipe -after the dam- don't have a set height)
