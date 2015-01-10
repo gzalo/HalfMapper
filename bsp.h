@@ -60,6 +60,16 @@ struct BSPMIPTEX{
 	uint32_t nWidth, nHeight;     // Extends of the texture
 	uint32_t nOffsets[MIPLEVELS]; // Offsets to texture mipmaps BSPMIPTEX;
 };
+
+#define MAX_MAP_HULLS 4
+struct BSPMODEL{
+    float nMins[3], nMaxs[3];          // Defines bounding box
+    VERTEX vOrigin;                  // Coordinates to move the // coordinate system
+    int32_t iHeadnodes[MAX_MAP_HULLS]; // Index into nodes array
+    int32_t nVisLeafs;                 // ???
+    int32_t iFirstFace, nFaces;        // Index and count into faces
+};
+ 
 struct COORDS{
 	float u, v;
 };
@@ -98,6 +108,7 @@ class BSP{
 		BSP(const string &filename, const string &id);
 		void render();
 		const string &getId();
+		int totalTris;
 	private:
 		void calculateOffset();
 
@@ -110,5 +121,6 @@ class BSP{
 
 extern map <string, TEXTURE> textures;
 extern map <string, vector<pair<VERTEX,string> > > landmarks;
+extern map <string, vector<string> > dontRenderModel;
 
 #endif

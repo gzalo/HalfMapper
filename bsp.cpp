@@ -4,6 +4,7 @@
 
 map <string, TEXTURE> textures;
 map <string, vector<pair<VERTEX,string> > > landmarks;
+map <string, vector<string> > dontRenderModel;
 map <string, VERTEX> offsets;
 
 //Correct UV coordinates
@@ -36,6 +37,22 @@ BSP::BSP(const string &filename, const string &id){
 	inBSP.read(bff, bHeader.lump[LUMP_ENTITIES].nLength);
 	parseEntities(bff,id);
 	delete []bff;
+	
+	//Read Models and hide some faces
+	BSPMODEL *models = new BSPMODEL[bHeader.lump[LUMP_MODELS].nLength/(int)sizeof(BSPMODEL)];
+	inBSP.seekg(bHeader.lump[LUMP_MODELS].nOffset, ios::beg);	
+	inBSP.read((char*)models, bHeader.lump[LUMP_MODELS].nLength);
+	
+	map <int, bool> dontRenderFace;
+	for(unsigned int i=0;i<dontRenderModel[id].size();i++){
+		int modelId = atoi(dontRenderModel[id][i].substr(1).c_str());
+		int startingFace = models[modelId].iFirstFace;
+		for(int j=0;j<models[modelId].nFaces;j++){
+			//if(modelId == 57) cout << j+startingFace << endl;
+			dontRenderFace[j+startingFace] = true;
+		}
+	}	
+	
 	
 	//Read Vertices
 	vector <VERTEX> vertices;
@@ -272,8 +289,13 @@ BSP::BSP(const string &filename, const string &id){
 	
 	inBSP.seekg(bHeader.lump[LUMP_FACES].nOffset, ios::beg);
 	for(int i=0;i<bHeader.lump[LUMP_FACES].nLength/(int)sizeof(BSPFACE);i++){
+		
+		
 		BSPFACE f;
 		inBSP.read((char*)&f, sizeof(f));
+		
+		if(dontRenderFace[i]) continue;
+		
 		BSPTEXTUREINFO b = btfs[f.iTextureInfo];
 		
 		string faceTexName = texNames[b.iMiptex];
@@ -348,10 +370,13 @@ BSP::BSP(const string &filename, const string &id){
 	glGenBuffers(texturedTris.size(), bufObjects);
 	
 	int i=0;
+	totalTris=0;
 	for(map <string, TEXSTUFF >::iterator it = texturedTris.begin();it != texturedTris.end();it++, i++){	
 		glBindBuffer(GL_ARRAY_BUFFER, bufObjects[i]);
 		glBufferData(GL_ARRAY_BUFFER, (*it).second.triangles.size()*sizeof(VECFINAL), (void*)&(*it).second.triangles[0], GL_STATIC_DRAW);
+		totalTris += (*it).second.triangles.size();
 	}
+	
 	mapId = id;
 		
 }
@@ -435,7 +460,7 @@ void BSP::render(){
 	for(map <string, TEXSTUFF >::iterator it = texturedTris.begin();it != texturedTris.end();it++, i++){
 		//Don't render some dummy triangles (triggers and such)
 		if((*it).first != "aaatrigger" && (*it).first != "origin" && (*it).first != "clip" && (*it).first != "sky" && (*it).first[0]!='{' && (*it).second.triangles.size() != 0){
-		
+			//if(mapId == "c1a0e.bsp") cout << (*it).first << endl;
 			glBindBuffer(GL_ARRAY_BUFFER, bufObjects[i]);
 			
 			/////T0

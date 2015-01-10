@@ -7,6 +7,7 @@ struct Config{
 	
 	map <string, vector<string> > chapters;	//Vector of maps per chapter
 	map <string, string> mapChapters;	//Chapter of each map
+	vector <string> maps; //Maps in playeable order
 	map <string, bool> drawChapter;
 	
 	Config(){
@@ -65,6 +66,7 @@ struct Config{
 						ss >> m;
 						if(m.size()>4){
 							chapters[chapterName].push_back(m);
+							maps.push_back(m);
 							mapChapters[m] = chapterName;
 						}
 					}

@@ -12,25 +12,27 @@ int main(int, char **){
 	if(wadLoad(cfg.gamePath+"halflife.wad") == -1) return -1;
 	if(wadLoad(cfg.gamePath+"liquids.wad") == -1) return -1;
 
-	/*drawChapter["Black Mesa inbound"] = true;
-	drawChapter["Anomalous materials"] = true;*/
-	
 	//Map loading
 	vector <BSP*> maps;
 	
-	int t = SDL_GetTicks();
+	int t = SDL_GetTicks(), mapAmount=0;
+	int totalTris=0;
 	
-	for(map <string, string>::iterator it=cfg.mapChapters.begin();it!=cfg.mapChapters.end();it++){
-		BSP *b = new BSP(cfg.gamePath+"maps/"+it->first, it->first); 
+	for(int i=0;i<cfg.maps.size();i++){
+		BSP *b = new BSP(cfg.gamePath+"maps/"+cfg.maps[i],cfg.maps[i]); 
+		totalTris += b->totalTris;
 		maps.push_back(b);
+		mapAmount++;
 	}
 	
-	cout << "Map load took " << SDL_GetTicks()-t << " ms." << endl;
+	cout << mapAmount << " maps loaded in " << SDL_GetTicks()-t << " ms." << endl;
+	cout << "Total triangles: " << totalTris << endl;
 
 	//---
 	
 	bool quit=false;
 	int kw=0, ks=0, ka=0, kd=0, kq=0, ke=0, kr=0, kc=0;
+	int ki=0, kk=0, kj=0, kl=0, ku=0, ko=0; //Keys for offseting maps
 	float position[3] = {0.0f, 0.0f, 0.0f};
 	float rotation[2] = {0.0f, 0.0f};
 	int oldMs = SDL_GetTicks(), frame=0;
@@ -47,6 +49,14 @@ int main(int, char **){
 				if(event.key.keysym.sym == SDLK_d) kd=1;
 				if(event.key.keysym.sym == SDLK_q) kq=1;
 				if(event.key.keysym.sym == SDLK_e) ke=1;
+				
+				if(event.key.keysym.sym == SDLK_i) ki=1;
+				if(event.key.keysym.sym == SDLK_k) kk=1;
+				if(event.key.keysym.sym == SDLK_j) kj=1;
+				if(event.key.keysym.sym == SDLK_l) kl=1;
+				if(event.key.keysym.sym == SDLK_u) ku=1;
+				if(event.key.keysym.sym == SDLK_o) ko=1;
+				
 				if(event.key.keysym.sym == SDLK_LSHIFT) kr=1;
 				if(event.key.keysym.sym == SDLK_LCTRL) kc=1;
 			}
@@ -57,6 +67,14 @@ int main(int, char **){
 				if(event.key.keysym.sym == SDLK_d) kd=0;
 				if(event.key.keysym.sym == SDLK_q) kq=0;
 				if(event.key.keysym.sym == SDLK_e) ke=0;
+				
+				if(event.key.keysym.sym == SDLK_i) ki=0;
+				if(event.key.keysym.sym == SDLK_k) kk=0;
+				if(event.key.keysym.sym == SDLK_j) kj=0;
+				if(event.key.keysym.sym == SDLK_l) kl=0;
+				if(event.key.keysym.sym == SDLK_u) ku=0;
+				if(event.key.keysym.sym == SDLK_o) ko=0;				
+				
 				if(event.key.keysym.sym == SDLK_LSHIFT) kr=0;
 				if(event.key.keysym.sym == SDLK_LCTRL) kc=0;
 			}
@@ -84,7 +102,7 @@ int main(int, char **){
 		if(ks) m_frontal--;
 		if(ka) m_left++;
 		if(kd) m_left--;
-			
+					
 		if(m_frontal || m_left){
 			float rotationF = rotation[0]* M_PI / 180.0f + atan2(m_frontal, m_left);
 			position[0] -= hsp * cos(rotationF);
