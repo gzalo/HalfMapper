@@ -18,7 +18,7 @@ int main(int, char **){
 	int t = SDL_GetTicks(), mapAmount=0;
 	int totalTris=0;
 	
-	for(int i=0;i<cfg.maps.size();i++){
+	for(unsigned int i=0;i<cfg.maps.size();i++){
 		BSP *b = new BSP(cfg.gamePath+"maps/"+cfg.maps[i],cfg.maps[i]); 
 		totalTris += b->totalTris;
 		maps.push_back(b);
@@ -32,9 +32,9 @@ int main(int, char **){
 	
 	bool quit=false;
 	int kw=0, ks=0, ka=0, kd=0, kq=0, ke=0, kr=0, kc=0;
-	int ki=0, kk=0, kj=0, kl=0, ku=0, ko=0; //Keys for offseting maps
 	float position[3] = {0.0f, 0.0f, 0.0f};
 	float rotation[2] = {0.0f, 0.0f};
+	float isoBounds=1000.0;
 	int oldMs = SDL_GetTicks(), frame=0;
 	
 	while(!quit){
@@ -50,13 +50,6 @@ int main(int, char **){
 				if(event.key.keysym.sym == SDLK_q) kq=1;
 				if(event.key.keysym.sym == SDLK_e) ke=1;
 				
-				if(event.key.keysym.sym == SDLK_i) ki=1;
-				if(event.key.keysym.sym == SDLK_k) kk=1;
-				if(event.key.keysym.sym == SDLK_j) kj=1;
-				if(event.key.keysym.sym == SDLK_l) kl=1;
-				if(event.key.keysym.sym == SDLK_u) ku=1;
-				if(event.key.keysym.sym == SDLK_o) ko=1;
-				
 				if(event.key.keysym.sym == SDLK_LSHIFT) kr=1;
 				if(event.key.keysym.sym == SDLK_LCTRL) kc=1;
 			}
@@ -67,13 +60,6 @@ int main(int, char **){
 				if(event.key.keysym.sym == SDLK_d) kd=0;
 				if(event.key.keysym.sym == SDLK_q) kq=0;
 				if(event.key.keysym.sym == SDLK_e) ke=0;
-				
-				if(event.key.keysym.sym == SDLK_i) ki=0;
-				if(event.key.keysym.sym == SDLK_k) kk=0;
-				if(event.key.keysym.sym == SDLK_j) kj=0;
-				if(event.key.keysym.sym == SDLK_l) kl=0;
-				if(event.key.keysym.sym == SDLK_u) ku=0;
-				if(event.key.keysym.sym == SDLK_o) ko=0;				
 				
 				if(event.key.keysym.sym == SDLK_LSHIFT) kr=0;
 				if(event.key.keysym.sym == SDLK_LCTRL) kc=0;
@@ -93,30 +79,51 @@ int main(int, char **){
 		//Velocities
 		int vsp = kr?32:(kc?2:8), hsp = kr?32:(kc?2:8);
 		
-		if(ke) position[1] += vsp;
-		if(kq) position[1] -= vsp;
-		
 		int m_left = 0, m_frontal = 0;
 			
 		if(kw) m_frontal++;
 		if(ks) m_frontal--;
 		if(ka) m_left++;
 		if(kd) m_left--;
-					
-		if(m_frontal || m_left){
-			float rotationF = rotation[0]* M_PI / 180.0f + atan2(m_frontal, m_left);
-			position[0] -= hsp * cos(rotationF);
-			position[2] -= hsp * sin(rotationF);
+		
+		if(cfg.isometric){
+			position[2] += m_left * hsp;
+			position[1] += m_frontal * hsp;
+			
+			if(ke) isoBounds += vsp * 10.0;
+			if(kq) isoBounds -= vsp * 10.0;
+			isoBounds = max(10.0f, isoBounds);
+		}else{
+			if(m_frontal || m_left){
+				float rotationF = rotation[0]* M_PI / 180.0f + atan2(m_frontal, m_left);
+				position[0] -= hsp * cos(rotationF);
+				position[2] -= hsp * sin(rotationF);
+			}
+			if(ke) position[1] += vsp;
+			if(kq) position[1] -= vsp;
 		}
 		
 		//Camera setup
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-		glMatrixMode(GL_MODELVIEW);
-		glLoadIdentity();
-		glRotated(rotation[1], 1.0f, 0.0f, 0.0f);
-		glRotated(rotation[0], 0.0f, 1.0f, 0.0f);		
-		glTranslatef(-position[0], -position[1], -position[2]);
 		
+		if(cfg.isometric){
+			glMatrixMode(GL_PROJECTION);
+			glLoadIdentity();
+			glOrtho(-isoBounds, isoBounds, -isoBounds, isoBounds, -100000.0, 100000.0);
+		  
+			glMatrixMode(GL_MODELVIEW);
+			glLoadIdentity();
+			glScalef(1.0f,2.0f,1.0f);
+			glRotatef(rotation[1], 1.0f, 0.0f, 0.0f);
+			glRotatef(rotation[0], 0.0f, 1.0f, 0.0f);
+			glTranslatef(-position[0], -position[1], -position[2]);
+		}else{
+			glMatrixMode(GL_MODELVIEW);
+			glLoadIdentity();
+			glRotated(rotation[1], 1.0f, 0.0f, 0.0f);
+			glRotated(rotation[0], 0.0f, 1.0f, 0.0f);		
+			glTranslatef(-position[0], -position[1], -position[2]);
+		}
 		//Map render
 		for(size_t i=0;i<maps.size();i++){
 			if(cfg.drawChapter[cfg.mapChapters[maps[i]->getId()]])

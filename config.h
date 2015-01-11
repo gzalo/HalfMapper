@@ -2,7 +2,7 @@
 #define CONFIG_H
 
 struct Config{
-	int w, h, fov;
+	int w, h, fov, isometric;
 	string gamePath;
 	
 	map <string, vector<string> > chapters;	//Vector of maps per chapter
@@ -13,7 +13,7 @@ struct Config{
 	Config(){
 	}
 	Config(const string& filename){
-		w=800; h=600, fov=60;
+		w=800, h=600, fov=60, isometric=0;
 		
 		ifstream in;
 		in.open(filename.c_str());
@@ -50,6 +50,10 @@ struct Config{
 					//Add a trailing slash if none
 					if (!gamePath.empty() && *gamePath.rbegin() != '/')
 						gamePath += '/';
+				}
+				if(identifier == "isometric"){
+					stringstream ss(value);
+					ss >> isometric;
 				}
 				if(identifier == "chapter"){
 					chapterName = value;
