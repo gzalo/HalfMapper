@@ -9,6 +9,7 @@ The latest binary (for Windows) can be downloaded here: http://gzalo.com/halfmap
 **It needs a Half Life installation** (at least the map folder and a couple of wads for textures)
 For other platforms it can be compiled after installing the required libraries and doing the required changes
 
+Isometric is supported! (samples here: http://imgur.com/a/jPVgD)
 ![Isometric support](http://i.imgur.com/ghh8OeT.jpg)
 ![Lambda Core](http://i.imgur.com/y5xzn7Q.png)
 

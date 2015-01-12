@@ -45,7 +45,8 @@ void parseEntities(const string &str, const string &id){
 				if(str == "\"classname\" \"trigger_changelevel\""){
 					isChangeLevel=true;
 				}
-				if(str == "\"classname\" \"trigger_teleport\"" || str == "\"classname\" \"func_pendulum\"" || str == "\"classname\" \"trigger_transition\"" || str == "\"classname\" \"trigger_hurt\"" || str == "\"classname\" \"func_train\""){
+				if(str == "\"classname\" \"trigger_teleport\"" || str == "\"classname\" \"func_pendulum\"" || str == "\"classname\" \"trigger_transition\"" 
+				|| str == "\"classname\" \"trigger_hurt\"" || str == "\"classname\" \"func_train\"" || str == "\"classname\" \"func_door_rotating\""){
 					isTeleport=true;
 				}
 				if(str.substr(0,8) == "\"origin\""){
