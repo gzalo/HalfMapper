@@ -4,13 +4,20 @@
 #include "bsp.h"
 #include "config.h"
 
-int main(int, char **){
-	Config cfg("config.ini");
+int main(int argc, char **argv){
+	Config cfg;
+	if(argc >= 2){
+		cfg = Config(argv[1]);
+	}else{
+		cfg = Config("config.ini");
+	}
 	
 	if(videoInit(cfg.w,cfg.h,cfg.fov) == -1) return -1;
-	
-	if(wadLoad(cfg.gamePath+"halflife.wad") == -1) return -1;
-	if(wadLoad(cfg.gamePath+"liquids.wad") == -1) return -1;
+
+	//Texture loading
+	for(size_t i=0;i<cfg.wads.size();i++){
+		if(wadLoad(cfg.gamePath+cfg.wads[i]) == -1) return -1;
+	}
 
 	//Map loading
 	vector <BSP*> maps;

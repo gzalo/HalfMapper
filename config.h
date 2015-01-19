@@ -9,6 +9,7 @@ struct Config{
 	map <string, string> mapChapters;	//Chapter of each map
 	vector <string> maps; //Maps in playeable order
 	map <string, bool> drawChapter;
+	vector <string> wads; //WAD files to load
 	
 	Config(){
 	}
@@ -35,30 +36,32 @@ struct Config{
 				if(identifier == "width"){
 					stringstream ss(value);
 					ss >> w;
-				}
-				if(identifier == "height"){
+				}else if(identifier == "height"){
 					stringstream ss(value);
 					ss >> h;
-				}
-				if(identifier == "fov"){
+				}else if(identifier == "fov"){
 					stringstream ss(value);
 					ss >> fov;
-				}
-				if(identifier == "gamePath"){
+				}else if(identifier == "gamePath"){
 					gamePath = value;
 					
 					//Add a trailing slash if none
 					if (!gamePath.empty() && *gamePath.rbegin() != '/')
 						gamePath += '/';
-				}
-				if(identifier == "isometric"){
+				}else if(identifier == "wads"){
+					stringstream ss(value);
+					
+					while(ss.good()){
+						string m;
+						ss >> m;
+						wads.push_back(m);
+					}
+				}else if(identifier == "isometric"){
 					stringstream ss(value);
 					ss >> isometric;
-				}
-				if(identifier == "chapter"){
+				}else if(identifier == "chapter"){
 					chapterName = value;
-				}
-				if(identifier == "maps"){
+				}else if(identifier == "maps"){
 					if(chapterName == ""){
 						cerr << "Error in config: map(s) without chapter section" << endl;
 						return;
@@ -74,8 +77,7 @@ struct Config{
 							mapChapters[m] = chapterName;
 						}
 					}
-				}
-				if(identifier == "drawchapter"){
+				}else if(identifier == "drawchapter"){
 					if(chapterName == ""){
 						cerr << "Error in config: drawchapter without chapter section" << endl;
 						return;

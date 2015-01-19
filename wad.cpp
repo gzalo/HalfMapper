@@ -15,13 +15,13 @@ int wadLoad(const string &filename){
 	inWAD.seekg(wh.nDirOffset, ios::beg);		
 	inWAD.read((char*)wdes, sizeof(WADDIRENTRY)*wh.nDir);
 	
-	uint8_t *dataDr = new uint8_t[256*256];	 //Raw texture data 
-	uint8_t *dataUp = new uint8_t[256*256*4]; //32 bit texture 
+	uint8_t *dataDr = new uint8_t[512*512];	 //Raw texture data 
+	uint8_t *dataUp = new uint8_t[512*512*4]; //32 bit texture 
 	uint8_t *dataPal = new uint8_t[256*3];	//256 color pallete
 	
 	for(int i=0;i<wh.nDir;i++){
 		inWAD.seekg(wdes[i].nFilePos, ios::beg);
-		
+
 		BSPMIPTEX bmt;
 		inWAD.read((char*)&bmt, sizeof(bmt));
 		if(textures.count(bmt.szName) == 0){ //Only load if it's the first appearance of the texture

@@ -1,3 +1,4 @@
 *.o
 stdout.txt
 hlmapper.exe
+config_temp.ini

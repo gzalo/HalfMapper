@@ -102,6 +102,8 @@ BSP::BSP(const string &filename, const string &id){
 			if(bmt.nOffsets[0] != 0 && bmt.nOffsets[1] != 0 && bmt.nOffsets[2] != 0 && bmt.nOffsets[3] != 0){
 				//Textures that are inside the BSP
 				
+				//Awful code. This and wad.cpp may be joined, they are pretty similar (except that these don't have color palettes)
+				
 				unsigned char *data0 = new unsigned char[bmt.nWidth*bmt.nHeight];
 				inBSP.seekg(bHeader.lump[LUMP_TEXTURES].nOffset+texOffSets[i]+bmt.nOffsets[0], ios::beg);
 				inBSP.read((char*)data0, bmt.nWidth*bmt.nHeight);
