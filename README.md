@@ -6,8 +6,11 @@ It allows for realtime rendering of the Black Mesa Research Facility.
 
 ## Download
 The latest binary (for Windows) can be downloaded here: http://gzalo.com/halfmapper_en/
+
+The configuration file (config.ini) lets you modify which chapters are rendered, as well as changing a few settings (FOV, resolution).
+
 **It needs a Half Life installation** (at least the map folder and a couple of wads for textures)
-For other platforms it can be compiled after installing the required libraries and doing the required changes
+For other platforms it can be compiled after installing the required libraries and using the alternative makefile. It can be compiled under Windows with Mingw.
 
 Isometric is supported! (samples here: http://imgur.com/a/jPVgD)
 ![Isometric support](http://i.imgur.com/ghh8OeT.jpg)
@@ -15,18 +18,20 @@ Isometric is supported! (samples here: http://imgur.com/a/jPVgD)
 
 Video showing the program http://www.youtube.com/watch?v=Hl2HbV3UbMs
 
+**List of overlaps found: https://github.com/gzalo/HalfMapper/blob/master/overlaps.md **
+
+## TODO list (ordered from highest to lowest priority)
+Try to add other Black Mesa maps to expand the universe: Opposing Force, Blue Shift and Decay might be possible. Other GoldSrc games maps will probably load without problems, such as Counter-Strike.
+
+Fixing areas that overlap (map loading sections) that cause z-fighting and some extra walls
+
+Improve code, clean up some stuff and use newer versions of libraries (SDL2, OpenGL3)
+
+Provide a better interface, allow for map position fine-tuning and disable certain maps 
+
 ## Used libraries
 SDL for window and event management
 
 OpenGL and GLU for rendering
 
 GLEW for easy extension access
-
-## TODO 
-Provide a better interface, allow for map position fine-tuning and disable certain maps
-
-Try to add other Black Mesa maps to expand the universe: Opposing Force, Blue Shift and Decay might be possible  
-
-Give a way to automatically take screenshots of the top of the maps, to do easier map joins.
-
-Hard code every missing "info_landmark" matching entities to improve the full map (for instance elevator and "surface tension" pipe -after the dam- don't have a set height)
