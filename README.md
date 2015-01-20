@@ -1,20 +1,22 @@
-# HalfMapper
+![HalfMapper](https://github.com/gzalo/HalfMapper/blob/master/extras/logo.png)
 This project is a renderer designed specifically to explore the world of Half-Life.
 It allows for realtime rendering of the Black Mesa Research Facility.
 
 **The main aim is not to make it playable**, just to be able to navigable (noclip). Models, decals, and other objects won't be rendered.
 
 ## Download
-The latest binary (for Windows) can be downloaded here: http://gzalo.com/halfmapper_en/
+The latest binary for Windows can be downloaded here: http://gzalo.com/halfmapper_en/
 
-The configuration file (config.ini) lets you modify which chapters are rendered, as well as changing a few settings (FOV, resolution).
+The configuration file (config.ini) lets you modify which chapters are rendered, as well as changing a few settings (FOV, resolution). Another config file can be created in order to load maps from other GoldSrc games, for instance check config_cstrike.ini. In order to load another config file, drag and drop it to the executable (or pass it in the commandline as an argument).
 
 **It needs a Half Life installation** (at least the map folder and a couple of wads for textures)
-For other platforms it can be compiled after installing the required libraries and using the alternative makefile. It can be compiled under Windows with Mingw.
+For other platforms it can be compiled after installing the required libraries and using the alternate makefile. It can be compiled under Windows with MinGW.
 
-Isometric is supported! (samples here: http://imgur.com/a/jPVgD)
+Isometric is supported! (samples here: http://imgur.com/a/jPVgD and http://imgur.com/a/40J7N)
 ![Isometric support](http://i.imgur.com/ghh8OeT.jpg)
 ![Lambda Core](http://i.imgur.com/y5xzn7Q.png)
+Counter-Strike 1.6 maps are supported as well!
+![Counter-Strike 1.6](http://i.imgur.com/Imyw50V.png)
 
 Video showing the program http://www.youtube.com/watch?v=Hl2HbV3UbMs
 
