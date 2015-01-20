@@ -1,4 +1,5 @@
 ![HalfMapper](https://github.com/gzalo/HalfMapper/blob/master/extras/logo.png)
+
 This project is a renderer designed specifically to explore the world of Half-Life.
 It allows for realtime rendering of the Black Mesa Research Facility.
 
@@ -23,17 +24,17 @@ Video showing the program http://www.youtube.com/watch?v=Hl2HbV3UbMs
 **List of overlaps found: https://github.com/gzalo/HalfMapper/blob/master/overlaps.md **
 
 ## TODO list (ordered from highest to lowest priority)
-Try to add other Black Mesa maps to expand the universe: Opposing Force, Blue Shift and Decay might be possible. Other GoldSrc games maps will probably load without problems, such as Counter-Strike.
+- Try to add other Black Mesa maps to expand the universe: Opposing Force, Blue Shift and Decay might be possible. Other GoldSrc games maps will probably load without problems, such as Counter-Strike.
 
-Fixing areas that overlap (map loading sections) that cause z-fighting and some extra walls
+- Fixing areas that overlap (map loading sections) that cause z-fighting and some extra walls
 
-Improve code, clean up some stuff and use newer versions of libraries (SDL2, OpenGL3)
+- Improve code, clean up some stuff and use newer versions of libraries (SDL2, OpenGL3)
 
-Provide a better interface, allow for map position fine-tuning and disable certain maps 
+- Provide a better interface, allow for map position fine-tuning and disable certain maps 
 
 ## Used libraries
-SDL for window and event management
+- SDL for window and event management
 
-OpenGL and GLU for rendering
+- OpenGL and GLU for rendering
 
-GLEW for easy extension access
+- GLEW for easy extension access
