@@ -30,7 +30,14 @@ void parseEntities(const string &str, const string &id){
 					sscanf(origin.c_str(),"%f %f %f", &x,&y,&z);
 					VERTEX v(x,y,z);
 					v.fixHand();
+					
+					if(targetname == "c1a1b" && id == "c1a1b.bsp"){
+						//The original map landmark is wrong, and c1a1f ends up being bellow c1a1b
+						v.y -= 96.0f;
+					}
+					
 					ret[targetname] = v;
+					
 				}else if(isChangeLevel){
 					if(landmark.size()>0)
 						changelevels[landmark]=1;
