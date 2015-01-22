@@ -10,7 +10,8 @@ The latest binary for Windows can be downloaded here: http://gzalo.com/halfmappe
 
 The configuration file (config.ini) lets you modify which chapters are rendered, as well as changing a few settings (FOV, resolution). Another config file can be created in order to load maps from other GoldSrc games, for instance check config_cstrike.ini. In order to load another config file, drag and drop it to the executable (or pass it in the commandline as an argument).
 
-**It needs a Half Life installation** (at least the map folder and a couple of wads for textures)
+**It needs a Half Life installation**
+If using the WON version, PAK files will have to be extracted. The map folder and files halflife.wad and liquids.wad are needed for the program to run. WON is untested, so please report any issues.
 For other platforms it can be compiled after installing the required libraries and using the alternate makefile. It can be compiled under Windows with MinGW.
 
 Isometric is supported! (samples here: http://imgur.com/a/jPVgD and http://imgur.com/a/40J7N)
