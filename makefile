@@ -1,6 +1,6 @@
 SOURCES=$(wildcard *.cpp *.rc)
 OBJECTS=$(addprefix bin/,$(addsuffix .o,$(notdir $(basename $(SOURCES)))))
-LDFLAGS= -lmingw32 -lsdlmain -lsdl -lglew32 -lopengl32 -lglu32
+LDFLAGS= -lmingw32 -lsdl2main -lsdl2 -lglew32 -lopengl32 -lglu32
 
 G++FLAGS= -O2 -Wall -pedantic -Wextra
 
