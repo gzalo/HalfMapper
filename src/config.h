@@ -27,7 +27,7 @@ struct Config{
 			string line;
 			getline(in, line);
 			
-			unsigned int equal = line.find("=");
+			size_t equal = line.find("=");
 			
 			if(equal != string::npos){
 				string identifier = line.substr(0, equal);
