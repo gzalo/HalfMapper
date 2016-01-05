@@ -69,13 +69,13 @@
 # (To distribute this file outside of CMake, substitute the full
 #  License text for the above reference.)
 
-FIND_PATH(GLEW_INCLUDE_DIR glew.h
+FIND_PATH(GLEW_INCLUDE_DIR GL/glew.h
 	HINTS
 	${GLEW}
 	$ENV{GLEW}
-	PATH_SUFFIXES include/GL include GL
-	i686-w64-mingw32/include/GL
-	x86_64-w64-mingw32/include/GL
+	PATH_SUFFIXES include
+	i686-w64-mingw32/include
+	x86_64-w64-mingw32/include
 	PATHS
 	~/Library/Frameworks
 	/Library/Frameworks
