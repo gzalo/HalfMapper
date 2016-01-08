@@ -2,7 +2,7 @@ if(${CMAKE_SOURCE_DIR} STREQUAL ${CMAKE_BINARY_DIR})
   message(FATAL_ERROR "Do not build in-tree. Create a build folder, and run cmake there.")
 endif()
 
-cmake_minimum_required(VERSION 2.8)
+cmake_minimum_required(VERSION 2.8.4)
 set(PROJECT_NAME "halfmapper")
 project(${PROJECT_NAME})
 
@@ -12,15 +12,14 @@ set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${${PROJECT_NAME}_SOURCE_DIR}/CMakeM
 find_package(SDL2 REQUIRED)
 find_package(OpenGL REQUIRED)
 find_package(GLEW REQUIRED)
-include_directories(${SDL2_INCLUDE_DIR})
-include_directories(${OPENGL_INCLUDE_DIR})
-include_directories(${GLEW_INCLUDE_DIR})
+include_directories(${SDL2_INCLUDE_DIR} ${OPENGL_INCLUDE_DIR} ${GLEW_INCLUDE_DIR})
 
 #Set the CXXFLAGS for Clang, GCC or MINGW.
 #Should cover OSX, Linux and MINGW Windows
 if(UNIX OR MINGW)
   set(CMAKE_CXX_FLAGS "-O2 -Wall -Wpedantic -Wextra")
 endif(UNIX OR MINGW)
+
 
 #Set compiller flags when on MSVC Windows.
 if(MSVC)
