@@ -136,10 +136,10 @@ int main(int argc, char **argv){
 			if(cfg.drawChapter[cfg.mapChapters[maps[i]->getId()]])
 				maps[i]->render();	
 		}
-		
-		SDL_Delay(1);
-		SDL_GL_SwapBuffers();
-		
+
+		//SDL_Delay(1);
+		SDL_GL_SwapWindow(sdlWindow);
+
 		frame++;
 		if(frame==30){
 			frame=0;
@@ -149,7 +149,7 @@ int main(int argc, char **argv){
 			oldMs = SDL_GetTicks();
 			char bf[64];
 			sprintf(bf, "%.2f FPS - %.2f %.2f %.2f", 30000.0f/(float)dt, position[0], position[1], position[2]);
-			SDL_WM_SetCaption(bf, NULL);
+			SDL_SetWindowTitle(sdlWindow, bf);
 		}
 	}
 	SDL_Quit();

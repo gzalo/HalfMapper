@@ -10,7 +10,7 @@
 #include <map>
 #include <algorithm>
 #include <assert.h>
-#include <SDL/SDL.h>
+#include <SDL2/SDL.h>
 #include <GL/glew.h>
 #include <GL/glu.h>
 #include <sys/types.h>
