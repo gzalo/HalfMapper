@@ -25,6 +25,11 @@ int videoInit(int w, int h, float fov){
 	}
 
 	SDL_GL_MakeCurrent(sdlWindow, sdlGLContext);
+	
+	if(glewInit() != GLEW_OK){
+		cerr << "Can't initialize Glew." << endl;
+		return -1;
+  	}
 
 	SDL_SetRelativeMouseMode(SDL_TRUE);
 

@@ -5,6 +5,7 @@
 #include <fstream>
 #include <sstream>
 #include <string>
+#include <cstring> //Mainly for memset (in bsp.cpp)
 #include <vector>
 #include <cmath>
 #include <map>
