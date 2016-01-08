@@ -1,6 +1,7 @@
 #include "common.h"
 #include "bsp.h"
 #include "entities.h"
+#include <cstring>
 
 map <string, TEXTURE> textures;
 map <string, vector<pair<VERTEX,string> > > landmarks;
