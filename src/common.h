@@ -11,11 +11,15 @@
 #include <map>
 #include <algorithm>
 #include <assert.h>
-#include <SDL2/SDL.h>
+#include <SDL.h>
 #include <GL/glew.h>
 #include <GL/glu.h>
 #include <sys/types.h>
-#include <dirent.h>
+
+#ifndef _MSC_VER
+	#include <dirent.h>
+#endif
+
 using namespace std;
 
 struct VERTEX{
