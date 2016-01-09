@@ -53,6 +53,7 @@ struct MapEntry
 	MapEntry()
 	{
 		this->m_fOffsetX = this->m_fOffsetY = this->m_fOffsetZ = 0.0f;
+		this->m_bRender = false;
 	}
 
 	bool        m_bRender;  /** Toggle rendering of this chapter. */
@@ -71,6 +72,7 @@ struct ChapterEntry
 	ChapterEntry()
 	{
 		this->m_fOffsetX = this->m_fOffsetY = this->m_fOffsetZ = 0.0f;
+		this->m_bRender = false;
 	}
 
 	bool                  m_bRender;     /** Toggle renderin of this entire chapter. */
@@ -108,6 +110,7 @@ public:
 	unsigned int              m_iHeight;         /** Window height. */
 	float                     m_fFov;            /** Field of view angle. */
 	bool                      m_bIsometric;      /** Isometric rendering. */
+	bool                      m_bFullscreen;     /** Fullscreen or Windowed mode. */
 	std::vector<std::string>  m_szGamePaths;     /** Locations of the game files. */
 	// Map config.
 	std::vector<ChapterEntry> m_vChapterEntries; /** Vector of chapters, containing maps. */
@@ -117,8 +120,8 @@ private:
 	/** Write the default user config when not present. */
 	XMLError WriteDefaultProgramConfig();
 
-	XMLDocument  m_xmlProgramConfig; /** Store the tinyxml2 object for the user config. */
-	XMLDocument  m_xmlMapConfig;     /** Store the tinyxml2 object for the map config. */
+	XMLDocument m_xmlProgramConfig; /** Store the tinyxml2 object for the user config. */
+	XMLDocument m_xmlMapConfig;     /** Store the tinyxml2 object for the map config. */
 
 };//end ConfigXML
 

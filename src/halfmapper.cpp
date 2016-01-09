@@ -15,7 +15,9 @@ int main(int argc, char **argv){
 		xmlconfig->LoadMapConfig("halflife.xml");
 	}
 
-	if(videoInit(xmlconfig->m_iWidth, xmlconfig->m_iHeight, xmlconfig->m_fFov) == -1) return -1;
+	VideoSystem *videosystem = new VideoSystem(xmlconfig->m_iWidth, xmlconfig->m_iHeight, xmlconfig->m_fFov, xmlconfig->m_bFullscreen);
+
+	if(videosystem->Init() == -1) return -1;
 
 	//Texture loading
 	for(size_t i=0;i<xmlconfig->m_vWads.size();i++){
@@ -122,10 +124,10 @@ int main(int argc, char **argv){
 			if(ke) position[1] += vsp;
 			if(kq) position[1] -= vsp;
 		}
+
+		videosystem->ClearBuffer();
 		
 		//Camera setup
-		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-		
 		if(xmlconfig->m_bIsometric){
 			glMatrixMode(GL_PROJECTION);
 			glLoadIdentity();
@@ -149,8 +151,7 @@ int main(int argc, char **argv){
 			maps[i]->render();	
 		}
 
-		//SDL_Delay(1);
-		SDL_GL_SwapWindow(sdlWindow);
+		videosystem->SwapBuffers();
 
 		frame++;
 		if(frame==30){
@@ -161,7 +162,7 @@ int main(int argc, char **argv){
 			oldMs = SDL_GetTicks();
 			char bf[64];
 			sprintf(bf, "%.2f FPS - %.2f %.2f %.2f", 30000.0f/(float)dt, position[0], position[1], position[2]);
-			SDL_SetWindowTitle(sdlWindow, bf);
+			videosystem->SetWindowTitle(bf);
 		}
 	}
 	SDL_Quit();
