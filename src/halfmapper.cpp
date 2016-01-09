@@ -19,7 +19,7 @@ int main(int argc, char **argv){
 
 	//Texture loading
 	for(size_t i=0;i<xmlconfig->m_vWads.size();i++){
-		if(wadLoad(xmlconfig->m_szGamePaths[0] + xmlconfig->m_vWads[i]) == -1) return -1;
+		if(wadLoad(xmlconfig->m_szGamePaths[0] + xmlconfig->m_vWads[i] + ".wad") == -1) return -1;
 	}
 
 	//Map loading

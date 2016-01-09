@@ -1,7 +1,7 @@
 <mapconfig>
 	<wads>
-		<wad>halflife.wad</wad>
-		<wad>liquids.wad</wad>
+		<wad>halflife</wad>
+		<wad>liquids</wad>
 	</wads>
 	
 	<chapter name="Black Mesa Inbound" render="0">
