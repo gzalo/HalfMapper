@@ -57,7 +57,7 @@ bool ConfigXML::LoadMapConfig(const char *szFilename)
 	XMLElement *wad = wadsElement->FirstChildElement("wad");
 
 	while (wad != nullptr) {
-		this->wads.push_back(wad->GetText());
+		this->m_vWads.push_back(wad->GetText());
 		wad = wad->NextSiblingElement("wad");
 	}
 
@@ -66,23 +66,28 @@ bool ConfigXML::LoadMapConfig(const char *szFilename)
 	XMLElement *chapter = rootNode->FirstChildElement("chapter");
 
 	while (chapter != nullptr) {
-		std::string chapterName = chapter->Attribute("name");
-
-		drawChapter[chapterName] = chapter->BoolAttribute("draw");
+		ChapterEntry sChapterEntry;
+		sChapterEntry.m_szName  = chapter->Attribute("name");
+		sChapterEntry.m_bRender = chapter->BoolAttribute("render");
 
 		XMLElement *map = chapter->FirstChildElement("map");
 
 		while (map != nullptr) {
-			std::string mapName = map->Attribute("name");
+			MapEntry sMapEntry;
+			sMapEntry.m_szName  = map->Attribute("name");
+			sMapEntry.m_bRender = map->BoolAttribute("render");
 
-			chapters[chapterName].push_back(mapName);
-			maps.push_back(mapName);
-			mapChapters[mapName] = chapterName;
+			map->QueryFloatAttribute("x", &sMapEntry.m_fOffsetX);
+			map->QueryFloatAttribute("y", &sMapEntry.m_fOffsetY);
+			map->QueryFloatAttribute("z", &sMapEntry.m_fOffsetZ);
+
+			sChapterEntry.m_vMapEntries.push_back(sMapEntry);
 
 			map = map->NextSiblingElement("map");
 		}
 			
 		chapter = chapter->NextSiblingElement("chapter");
+		this->m_vChapterEntries.push_back(sChapterEntry);
 	}
 
 	return true;

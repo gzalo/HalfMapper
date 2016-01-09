@@ -14,28 +14,38 @@ int main(int argc, char **argv){
 	}else{
 		xmlconfig->LoadMapConfig("halflife.xml");
 	}
-	
+
 	if(videoInit(xmlconfig->m_iWidth, xmlconfig->m_iHeight, xmlconfig->m_iFov) == -1) return -1;
 
 	//Texture loading
-	for(size_t i=0;i<xmlconfig->wads.size();i++){
-		if(wadLoad(xmlconfig->m_szGamePath + xmlconfig->wads[i]) == -1) return -1;
+	for(size_t i=0;i<xmlconfig->m_vWads.size();i++){
+		if(wadLoad(xmlconfig->m_szGamePath + xmlconfig->m_vWads[i]) == -1) return -1;
 	}
 
 	//Map loading
 	vector <BSP*> maps;
 	
-	int t = SDL_GetTicks(), mapAmount=0;
+	int t = SDL_GetTicks(), mapCount = 0, mapRenderCount = 0;
 	int totalTris=0;
 	
-	for(unsigned int i=0;i<xmlconfig->maps.size();i++){
-		BSP *b = new BSP(xmlconfig->m_szGamePath + "maps/" + xmlconfig->maps[i] + ".bsp", xmlconfig->maps[i]); 
-		totalTris += b->totalTris;
-		maps.push_back(b);
-		mapAmount++;
+	for(unsigned int i = 0; i < xmlconfig->m_vChapterEntries.size(); i++) {
+		for (unsigned int j = 0; j < xmlconfig->m_vChapterEntries[i].m_vMapEntries.size(); j++) {
+			ChapterEntry sChapterEntry = xmlconfig->m_vChapterEntries[i];
+			MapEntry sMapEntry = xmlconfig->m_vChapterEntries[i].m_vMapEntries[j];
+
+			if (sChapterEntry.m_bRender && sMapEntry.m_bRender) {
+				BSP *b = new BSP(xmlconfig->m_szGamePath + "maps/" + sMapEntry.m_szName + ".bsp", sMapEntry.m_szName);
+				totalTris += b->totalTris;
+				maps.push_back(b);
+				mapRenderCount++;
+			}
+
+			mapCount++;
+		}
 	}
 	
-	cout << mapAmount << " maps loaded in " << SDL_GetTicks()-t << " ms." << endl;
+	cout << mapCount << " maps found in config file." << endl;
+	cout << mapRenderCount << " maps to render - loaded in " << SDL_GetTicks()-t << " ms." << endl;
 	cout << "Total triangles: " << totalTris << endl;
 
 	//---
@@ -136,8 +146,7 @@ int main(int argc, char **argv){
 		}
 		//Map render
 		for(size_t i=0;i<maps.size();i++){
-			if(xmlconfig->drawChapter[xmlconfig->mapChapters[maps[i]->getId()]])
-				maps[i]->render();	
+			maps[i]->render();	
 		}
 
 		//SDL_Delay(1);
