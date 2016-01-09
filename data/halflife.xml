@@ -1,0 +1,136 @@
+<mapconfig>
+	<wads>
+		<wad>halflife.wad</wad>
+		<wad>liquids.wad</wad>
+	</wads>
+	
+	<chapter name="Black Mesa Inbound" draw="0">
+		<map name="c0a0" />
+		<map name="c0a0a" />
+		<map name="c0a0b" />
+		<map name="c0a0c" />
+		<map name="c0a0d" />
+		<map name="c0a0e" />
+	</chapter>
+	
+	<chapter name="Anomalous Materials" draw="1">
+		<map name="c1a0" />
+		<map name="c1a0d" />
+		<map name="c1a0a" />
+		<map name="c1a0b" />
+		<map name="c1a0e" />
+	</chapter>
+	
+	<chapter name="Unforseen Concequences" draw="0">
+		<map name="c1a0c" />
+		<map name="c1a1" />
+		<map name="c1a1a" />
+		<map name="c1a1f" />
+		<map name="c1a1b" />
+		<map name="c1a1c" />
+		<map name="c1a1d" />
+	</chapter>
+	
+	<chapter name="Office Complex" draw="0">
+		<map name="c1a2" />
+		<map name="c1a2a" />
+		<map name="c1a2b" />
+		<map name="c1a2c" />
+		<map name="c1a2d" />
+	</chapter>
+
+	<chapter name="We've Got Hostiles" draw="0">
+		<map name="c1a3" />
+		<map name="c1a3d" />
+		<map name="c1a3a" />
+		<map name="c1a3b" />
+		<map name="c1a3c" />
+	</chapter>
+
+	<chapter name="Blast Pit" draw="0">
+		<map name="c1a4" />
+		<map name="c1a4k" />
+		<map name="c1a4b" />
+		<map name="c1a4d" />
+		<map name="c1a4f" />
+		<map name="c1a4i" />
+		<map name="c1a4g" />
+		<map name="c1a4j" />
+	</chapter>
+
+	<chapter name="Power Up" draw="0">
+		<map name="c2a1" />
+		<map name="c2a1b" />
+		<map name="c2a1a" />
+	</chapter>
+
+	<chapter name="On A Rail" draw="0">
+		<map name="c2a2" />
+		<map name="c2a2a" />
+		<map name="c2a2b1" />
+		<map name="c2a2b2" />
+		<map name="c2a2c" />
+		<map name="c2a2d" />
+		<map name="c2a2e" />
+		<map name="c2a2f" />
+		<map name="c2a2g" />
+		<map name="c2a2h" />
+	</chapter>
+
+	<chapter name="Apprehension" draw="0">
+		<map name="c2a3" />
+		<map name="c2a3a" />
+		<map name="c2a3b" />
+		<map name="c2a3c" />
+		<map name="c2a3d" />
+		<map name="c2a3e" />
+	</chapter>
+
+	<chapter name="Residue Processing" draw="0">
+		<map name="c2a4" />
+		<map name="c2a4a" />
+		<map name="c2a4b" />
+		<map name="c2a4c" />
+	</chapter>
+
+	<chapter name="Questionable Ethics" draw="0">
+		<map name="c2a4d" />
+		<map name="c2a4e" />
+		<map name="c2a4f" />
+		<map name="c2a4g" />
+	</chapter>
+
+	<chapter name="Surface Tension" draw="0">
+		<map name="c2a5" />
+		<map name="c2a5w" />
+		<map name="c2a5x" />
+		<map name="c2a5a" />
+		<map name="c2a5b" />
+		<map name="c2a5c" />
+		<map name="c2a5d" />
+		<map name="c2a5e" />
+		<map name="c2a5f" />
+		<map name="c2a5g" />
+	</chapter>
+
+	<chapter name="Forget About Freeman" draw="0">
+		<map name="c3a1" />
+		<map name="c3a1a" />
+		<map name="c3a1b" />
+	</chapter>
+
+	<chapter name="Lambda Core" draw="0">
+		<map name="c3a2e" />
+		<map name="c3a2" />
+		<map name="c3a2a" />
+		<map name="c3a2b" />
+		<map name="c3a2c" />
+		<map name="c3a2d" />
+		<map name="c3a2f" />
+	</chapter>
+
+	<chapter name="Xen" draw="0" />
+	<chapter name="Gonarch's Lair" draw="0" />
+	<chapter name="Interloper" draw="0" />
+	<chapter name="Nihilanth" draw="0" />
+</mapconfig>

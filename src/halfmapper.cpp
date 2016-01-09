@@ -2,21 +2,24 @@
 #include "video.h"
 #include "wad.h"
 #include "bsp.h"
-#include "config.h"
+#include "ConfigXML.h"
 
 int main(int argc, char **argv){
-	Config cfg;
+	ConfigXML *xmlconfig = new ConfigXML();
+
+	xmlconfig->LoadProgramConfig();
+
 	if(argc >= 2){
-		cfg = Config(argv[1]);
+		xmlconfig->LoadMapConfig(argv[1]);
 	}else{
-		cfg = Config("config.ini");
+		xmlconfig->LoadMapConfig("halflife.xml");
 	}
 	
-	if(videoInit(cfg.w,cfg.h,cfg.fov) == -1) return -1;
+	if(videoInit(xmlconfig->m_iWidth, xmlconfig->m_iHeight, xmlconfig->m_iFov) == -1) return -1;
 
 	//Texture loading
-	for(size_t i=0;i<cfg.wads.size();i++){
-		if(wadLoad(cfg.gamePath+cfg.wads[i]) == -1) return -1;
+	for(size_t i=0;i<xmlconfig->wads.size();i++){
+		if(wadLoad(xmlconfig->m_szGamePath + xmlconfig->wads[i]) == -1) return -1;
 	}
 
 	//Map loading
@@ -25,8 +28,8 @@ int main(int argc, char **argv){
 	int t = SDL_GetTicks(), mapAmount=0;
 	int totalTris=0;
 	
-	for(unsigned int i=0;i<cfg.maps.size();i++){
-		BSP *b = new BSP(cfg.gamePath+"maps/"+cfg.maps[i],cfg.maps[i]); 
+	for(unsigned int i=0;i<xmlconfig->maps.size();i++){
+		BSP *b = new BSP(xmlconfig->m_szGamePath + "maps/" + xmlconfig->maps[i] + ".bsp", xmlconfig->maps[i]); 
 		totalTris += b->totalTris;
 		maps.push_back(b);
 		mapAmount++;
@@ -93,7 +96,7 @@ int main(int argc, char **argv){
 		if(ka) m_left++;
 		if(kd) m_left--;
 		
-		if(cfg.isometric){
+		if(xmlconfig->m_bIsometric){
 			position[2] += m_left * hsp;
 			position[1] += m_frontal * hsp;
 			
@@ -113,7 +116,7 @@ int main(int argc, char **argv){
 		//Camera setup
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 		
-		if(cfg.isometric){
+		if(xmlconfig->m_bIsometric){
 			glMatrixMode(GL_PROJECTION);
 			glLoadIdentity();
 			glOrtho(-isoBounds, isoBounds, -isoBounds, isoBounds, -100000.0, 100000.0);
@@ -133,7 +136,7 @@ int main(int argc, char **argv){
 		}
 		//Map render
 		for(size_t i=0;i<maps.size();i++){
-			if(cfg.drawChapter[cfg.mapChapters[maps[i]->getId()]])
+			if(xmlconfig->drawChapter[xmlconfig->mapChapters[maps[i]->getId()]])
 				maps[i]->render();	
 		}
 

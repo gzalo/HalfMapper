@@ -23,7 +23,7 @@ endif(UNIX OR MINGW)
 
 #Set compiller flags when on MSVC Windows.
 if(MSVC)
-  add_definitions("/O2 /W4")
+  add_definitions("/W4")
 endif(MSVC)
 
 
@@ -33,6 +33,14 @@ file(GLOB SOURCE_FILES
     "src/*.cpp"
 )
 
+file(GLOB TINYXML2_FILES
+	"thirdparty/tinyxml2/tinyxml2.cpp"
+	"thirdparty/tinyxml2/tinyxml2.h"
+)
+
+#Make sure tinyxml is in its own group in Visual Studio, and in the include path.
+SOURCE_GROUP(tinyxml2 FILES ${TINYXML2_FILES})
+include_directories("thirdparty/tinyxml2")
 
 #Add Windows resources.
 if(MSVC OR MINGW)
@@ -42,7 +50,7 @@ if(MSVC OR MINGW)
   )
 endif(MSVC OR MINGW)
 
-add_executable(${PROJECT_NAME} ${SOURCE_FILES} ${RESOURCE_FILES})
+add_executable(${PROJECT_NAME} ${SOURCE_FILES} ${TINYXML2_FILES} ${RESOURCE_FILES})
 
 
 #Add link libraries.
