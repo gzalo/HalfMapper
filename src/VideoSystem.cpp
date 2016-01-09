@@ -22,7 +22,7 @@
 #include <iostream>
 #include <SDL.h>
 #include <GL/glew.h>
-#include "video.h"
+#include "VideoSystem.h"
 
 /**
  * Set the basic configuration of the window and renderer.

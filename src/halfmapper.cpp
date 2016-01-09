@@ -1,5 +1,5 @@
 #include "common.h"
-#include "video.h"
+#include "VideoSystem.h"
 #include "wad.h"
 #include "bsp.h"
 #include "ConfigXML.h"
