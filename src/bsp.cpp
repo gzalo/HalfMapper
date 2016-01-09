@@ -484,8 +484,3 @@ void BSP::render(){
 	}
 	glPopMatrix();
 }
-
-const string &BSP::getId(){
-	return mapId;
-}
-

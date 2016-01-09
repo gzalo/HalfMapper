@@ -35,7 +35,7 @@
 #endif
 
 #ifdef __linux__
-	#define PATH_DELIM '\'
+	#define PATH_DELIM '/'
 	#define HALFLIFE_DEFAULT_GAMEPATH "~/.steam/steamapps/common/Half-Life/valve/"
 #endif
 
@@ -106,7 +106,7 @@ public:
 	// User config.
 	unsigned int              m_iWidth;          /** Window width. */
 	unsigned int              m_iHeight;         /** Window height. */
-	unsigned int              m_iFov;            /** Field of view angle. */
+	float                     m_fFov;            /** Field of view angle. */
 	bool                      m_bIsometric;      /** Isometric rendering. */
 	std::vector<std::string>  m_szGamePaths;     /** Locations of the game files. */
 	// Map config.

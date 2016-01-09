@@ -15,7 +15,7 @@ int main(int argc, char **argv){
 		xmlconfig->LoadMapConfig("halflife.xml");
 	}
 
-	if(videoInit(xmlconfig->m_iWidth, xmlconfig->m_iHeight, xmlconfig->m_iFov) == -1) return -1;
+	if(videoInit(xmlconfig->m_iWidth, xmlconfig->m_iHeight, xmlconfig->m_fFov) == -1) return -1;
 
 	//Texture loading
 	for(size_t i=0;i<xmlconfig->m_vWads.size();i++){
@@ -85,8 +85,8 @@ int main(int argc, char **argv){
 				if(event.key.keysym.sym == SDLK_LCTRL) kc=0;
 			}
 			if(event.type == SDL_MOUSEMOTION){
-				rotation[0] += event.motion.xrel/15.0;
-				rotation[1] += event.motion.yrel/15.0;
+				rotation[0] += event.motion.xrel/15.0f;
+				rotation[1] += event.motion.yrel/15.0f;
 			}
 		}
 
@@ -99,7 +99,7 @@ int main(int argc, char **argv){
 		//Velocities
 		int vsp = kr?32:(kc?2:8), hsp = kr?32:(kc?2:8);
 		
-		int m_left = 0, m_frontal = 0;
+		float m_left = 0.0f, m_frontal = 0.0f;
 			
 		if(kw) m_frontal++;
 		if(ks) m_frontal--;
@@ -110,12 +110,12 @@ int main(int argc, char **argv){
 			position[2] += m_left * hsp;
 			position[1] += m_frontal * hsp;
 			
-			if(ke) isoBounds += vsp * 10.0;
-			if(kq) isoBounds -= vsp * 10.0;
+			if(ke) isoBounds += vsp * 10.0f;
+			if(kq) isoBounds -= vsp * 10.0f;
 			isoBounds = max(10.0f, isoBounds);
 		}else{
 			if(m_frontal || m_left){
-				float rotationF = rotation[0]* M_PI / 180.0f + atan2(m_frontal, m_left);
+				float rotationF = rotation[0]* (float)M_PI / 180.0f + atan2(m_frontal, m_left);
 				position[0] -= hsp * cos(rotationF);
 				position[2] -= hsp * sin(rotationF);
 			}

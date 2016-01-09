@@ -32,7 +32,7 @@ ConfigXML::ConfigXML()
 {
 	this->m_iWidth     = 800;
 	this->m_iHeight    = 600;
-	this->m_iFov       = 60;
+	this->m_fFov       = 60.0f;
 	this->m_bIsometric = false;
 
 }//end ConfigXML::ConfigXML()
@@ -76,10 +76,10 @@ XMLError ConfigXML::LoadProgramConfig()
 	}
 
 	XMLElement *window = rootNode->FirstChildElement("window");
-	window->QueryUnsignedAttribute("width",  &this->m_iWidth);
-	window->QueryUnsignedAttribute("height", &this->m_iHeight);
-	window->QueryUnsignedAttribute("fov",    &this->m_iFov);
-	window->QueryBoolAttribute("isometric",  &this->m_bIsometric);
+	window->QueryUnsignedAttribute("width",     &this->m_iWidth    );
+	window->QueryUnsignedAttribute("height",    &this->m_iHeight   );
+	window->QueryFloatAttribute   ("fov",       &this->m_fFov      );
+	window->QueryBoolAttribute    ("isometric", &this->m_bIsometric);
 
 
 	XMLElement *gamepaths = rootNode->FirstChildElement("gamepaths");
@@ -200,7 +200,7 @@ XMLError ConfigXML::WriteDefaultProgramConfig()
 	XMLElement *window = this->m_xmlProgramConfig.NewElement("window");
 	window->SetAttribute("width",     this->m_iWidth);
 	window->SetAttribute("height",    this->m_iHeight);
-	window->SetAttribute("fov",       this->m_iFov);
+	window->SetAttribute("fov",       this->m_fFov);
 	window->SetAttribute("isometric", this->m_bIsometric);
 
 	// Collection of game paths.

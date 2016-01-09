@@ -1,8 +1,8 @@
 #include "common.h"
 #include "bsp.h"
 
-void parseEntities(const string &str, const string &id){
-	stringstream ss(str);
+void parseEntities(const string &szStr, const string &id){
+	stringstream ss(szStr);
 	
 	int status = 0;
 	
@@ -31,7 +31,7 @@ void parseEntities(const string &str, const string &id){
 					VERTEX v(x,y,z);
 					v.fixHand();
 					
-					if(targetname == "c1a1b" && id == "c1a1b.bsp"){
+					if(targetname == "c1a1b" && id == "c1a1b"){
 						//The original map landmark is wrong, and c1a1f ends up being bellow c1a1b
 						v.y -= 96.0f;
 					}

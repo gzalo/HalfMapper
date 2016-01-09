@@ -46,7 +46,7 @@ int videoInit(int w, int h, float fov){
 	glShadeModel(GL_SMOOTH);
 	glEnable(GL_DEPTH_TEST);
 	glEnable(GL_ALPHA_TEST);
-	glAlphaFunc(GL_GREATER,0.8);
+	glAlphaFunc(GL_GREATER, 0.8f);
 	glDepthFunc(GL_LEQUAL);
 	glEnable(GL_CULL_FACE);
 	glCullFace(GL_FRONT); 

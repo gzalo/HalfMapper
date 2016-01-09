@@ -107,7 +107,6 @@ class BSP{
 	public:
 		BSP(const string &filename, const string &id);
 		void render();
-		const string &getId();
 		int totalTris;
 	private:
 		void calculateOffset();

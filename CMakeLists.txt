@@ -23,7 +23,7 @@ endif(UNIX OR MINGW)
 
 #Set compiller flags when on MSVC Windows.
 if(MSVC)
-  add_definitions("/W4")
+  add_definitions("/W4 /D_CRT_SECURE_NO_WARNINGS")
 endif(MSVC)
 
 
