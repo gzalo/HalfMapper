@@ -1,7 +1,6 @@
 <config>
-    <width>1440</width>
-    <height>900</height>
-    <fov>60</fov>
-    <isometric>0</isometric>
-    <gamepath>D:/Games/Steam/SteamApps/common/Half-Life/valve</gamepath>
+    <window width="800" height="600" fov="60" isometric="0"/>
+    <gamepaths>
+        <gamepath name="halflife">D:\Games\Steam\SteamApps\common\Half-Life\valve</gamepath>
+    </gamepaths>
 </config>

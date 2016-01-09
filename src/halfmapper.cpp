@@ -19,7 +19,7 @@ int main(int argc, char **argv){
 
 	//Texture loading
 	for(size_t i=0;i<xmlconfig->m_vWads.size();i++){
-		if(wadLoad(xmlconfig->m_szGamePath + xmlconfig->m_vWads[i]) == -1) return -1;
+		if(wadLoad(xmlconfig->m_szGamePaths[0] + xmlconfig->m_vWads[i]) == -1) return -1;
 	}
 
 	//Map loading
@@ -34,7 +34,7 @@ int main(int argc, char **argv){
 			MapEntry sMapEntry = xmlconfig->m_vChapterEntries[i].m_vMapEntries[j];
 
 			if (sChapterEntry.m_bRender && sMapEntry.m_bRender) {
-				BSP *b = new BSP(xmlconfig->m_szGamePath + "maps/" + sMapEntry.m_szName + ".bsp", sMapEntry.m_szName);
+				BSP *b = new BSP(xmlconfig->m_szGamePaths[0] + "maps/" + sMapEntry.m_szName + ".bsp", sMapEntry.m_szName);
 				totalTris += b->totalTris;
 				maps.push_back(b);
 				mapRenderCount++;
