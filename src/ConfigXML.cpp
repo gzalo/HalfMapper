@@ -73,7 +73,7 @@ XMLError ConfigXML::LoadProgramConfig()
 			path += PATH_DELIM;
 
 		this->m_szGamePaths.push_back(path);
-		gamepath = gamepath->NextSiblingElement("map");
+		gamepath = gamepath->NextSiblingElement("gamepath");
 	}
 
 	return XML_SUCCESS;
@@ -133,6 +133,10 @@ XMLError ConfigXML::LoadMapConfig(const char *szFilename)
 		sChapterEntry.m_szName  = chapter->Attribute("name");
 		sChapterEntry.m_bRender = chapter->BoolAttribute("render");
 
+		chapter->QueryFloatAttribute("x", &sChapterEntry.m_fOffsetX);
+		chapter->QueryFloatAttribute("y", &sChapterEntry.m_fOffsetY);
+		chapter->QueryFloatAttribute("z", &sChapterEntry.m_fOffsetZ);
+
 		if (sChapterEntry.m_szName == "") {
 			std::cout << "Malformed XML. Chapter found without name attribute." << std::endl;
 			return XML_ERROR_FILE_READ_ERROR;
@@ -182,15 +186,20 @@ XMLError ConfigXML::WriteDefaultProgramConfig()
 	XMLElement *gamepaths = this->m_xmlProgramConfig.NewElement("gamepaths");
 
 	// Half Life game path.
-	XMLElement *gamepath = this->m_xmlProgramConfig.NewElement("gamepath");
-	gamepath->SetAttribute("name", "halflife");
-	gamepath->SetText(HALFLIFE_DEFAULT_GAMEPATH);
+	XMLElement *hlgamepath = this->m_xmlProgramConfig.NewElement("gamepath");
+	hlgamepath->SetAttribute("name", "halflife");
+	hlgamepath->SetText(HALFLIFE_DEFAULT_GAMEPATH);
+	// Counter Strike game path.
+	XMLElement *csgamepath = this->m_xmlProgramConfig.NewElement("gamepath");
+	csgamepath->SetAttribute("name", "cstrike");
+	csgamepath->SetText(CSTRIKE_DEFAULT_GAMEPATH);
 
 	// Add elements to the document.
 	this->m_xmlProgramConfig.InsertFirstChild(rootNode);
 		rootNode->InsertFirstChild(window);
 		rootNode->InsertEndChild(gamepaths);
-			gamepaths->InsertFirstChild(gamepath);
+			gamepaths->InsertFirstChild(hlgamepath);
+			gamepaths->InsertEndChild(csgamepath);
 
 	// Save.
 	XMLError eRetCode = this->m_xmlProgramConfig.SaveFile("config.xml");

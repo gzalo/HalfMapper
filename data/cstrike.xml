@@ -1,0 +1,52 @@
+<mapconfig>
+	<wads>
+		<wad>cstrike.wad</wad>
+		<wad>cs_assault.wad</wad>
+		<wad>cs_dust.wad</wad>
+		<wad>de_aztec.wad</wad>
+		<wad>cs_office.wad</wad>
+		<wad>itsitaly.wad</wad>
+		<wad>cs_bdog.wad</wad>
+		<wad>halflife.wad</wad>
+	</wads>
+
+	<chapter name="Assault" render="1">
+		<map name="cs_assault" render="1" />
+	</chapter>
+
+	<chapter name="Italy">
+		<map name="cs_italy" />
+	</chapter>
+
+	<chapter name="Office">
+		<map name="cs_office" />
+	</chapter>
+
+	<chapter name="Aztec">
+		<map name="de_aztec" />
+	</chapter>
+
+	<chapter name="Dust">
+		<map name="de_dust" />
+	</chapter>
+
+	<chapter name="Dust2">
+		<map name="de_dust2" />
+	</chapter>
+
+	<chapter name="Inferno">
+		<map name="de_inferno" />
+	</chapter>
+
+	<chapter name="Nuke">
+		<map name="de_nuke" />
+	</chapter>
+
+	<chapter name="Train">
+		<map name="de_train" />
+	</chapter>
+
+	<chapter name="Vertigo">
+		<map name="de_vertigo" />
+	</chapter>
+</mapconfig>

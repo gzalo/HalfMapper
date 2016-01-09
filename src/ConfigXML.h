@@ -7,14 +7,17 @@
 #include "tinyxml2.h"
 
 #ifdef _MSC_VER
-	#define HALFLIFE_DEFAULT_GAMEPATH "C:\\Program Files (x86)\\Steam\\steamapps\\common\\Half Life\\valve"
 	#define PATH_DELIM '\\'
+	#define HALFLIFE_DEFAULT_GAMEPATH "C:\\Program Files (x86)\\Steam\\steamapps\\common\\Half-Life\\valve\\"
 #endif
 
 #ifdef __linux__
-	#define HALFLIFE_DEFAULT_GAMEPATH "~/.steam/steamapps/common/Half Life/valve"
-	#define PATH_DELIM '/'
+	#define PATH_DELIM '\'
+	#define HALFLIFE_DEFAULT_GAMEPATH "~/.steam/steamapps/common/Half-Life/valve/"
 #endif
+
+#define CSTRIKE_DEFAULT_GAMEPATH HALFLIFE_DEFAULT_GAMEPATH "cstrike"
+
 
 using namespace tinyxml2;
 
@@ -41,9 +44,17 @@ struct MapEntry
  */
 struct ChapterEntry
 {
+	ChapterEntry()
+	{
+		this->m_fOffsetX = this->m_fOffsetY = this->m_fOffsetZ = 0.0f;
+	}
+
 	bool                  m_bRender;     /** Toggle renderin of this entire chapter. */
 	std::string           m_szName;      /** Name of this chapter. */
 	std::vector<MapEntry> m_vMapEntries; /** Vector of maps in this chapter. */
+	float                 m_fOffsetX; /** Offset X axis. */
+	float                 m_fOffsetY; /** Offset Y axis. */
+	float                 m_fOffsetZ; /** Offset Z axis. */
 };//end ChapterEntry
 
 
