@@ -22,6 +22,7 @@
 	</chapter>
 	
 	<chapter name="Unforseen Concequences" render="1">
+		<offset x="0" y="0" z="0"/>
 		<map name="c1a0c" render="1"/>
 		<map name="c1a1" render="1"/>
 		<map name="c1a1a" render="1"/>

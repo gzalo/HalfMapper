@@ -446,7 +446,7 @@ void BSP::render(){
 	calculateOffset();
 	
 	glPushMatrix();
-	glTranslatef(offset.x, offset.y, offset.z);
+	glTranslatef(offset.x + ConfigOffsetChapter.x, offset.y + ConfigOffsetChapter.y, offset.z + ConfigOffsetChapter.z);
 
 	glEnableClientState(GL_VERTEX_ARRAY);
 	glEnableClientState(GL_TEXTURE_COORD_ARRAY);
@@ -486,4 +486,11 @@ void BSP::render(){
 		}
 	}
 	glPopMatrix();
+}
+
+void BSP::SetChapterOffset(const float x, const float y, const float z)
+{
+	ConfigOffsetChapter.x = x;
+	ConfigOffsetChapter.y = y;
+	ConfigOffsetChapter.z = z;
 }

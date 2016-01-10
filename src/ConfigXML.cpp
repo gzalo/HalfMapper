@@ -156,13 +156,17 @@ XMLError ConfigXML::LoadMapConfig(const char *szFilename)
 		sChapterEntry.m_szName  = chapter->Attribute("name");
 		sChapterEntry.m_bRender = chapter->BoolAttribute("render");
 
-		chapter->QueryFloatAttribute("x", &sChapterEntry.m_fOffsetX);
-		chapter->QueryFloatAttribute("y", &sChapterEntry.m_fOffsetY);
-		chapter->QueryFloatAttribute("z", &sChapterEntry.m_fOffsetZ);
-
 		if (sChapterEntry.m_szName == "") {
 			std::cout << "Malformed XML. Chapter found without name attribute." << std::endl;
 			return XML_ERROR_FILE_READ_ERROR;
+		}
+
+		XMLElement *chapteroffset = chapter->FirstChildElement("offset");
+
+		if (chapteroffset != nullptr) {
+			chapteroffset->QueryFloatAttribute("x", &sChapterEntry.m_fOffsetX);
+			chapteroffset->QueryFloatAttribute("y", &sChapterEntry.m_fOffsetY);
+			chapteroffset->QueryFloatAttribute("z", &sChapterEntry.m_fOffsetZ);
 		}
 
 		XMLElement *map = chapter->FirstChildElement("map");

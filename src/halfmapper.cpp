@@ -37,6 +37,7 @@ int main(int argc, char **argv){
 
 			if (sChapterEntry.m_bRender && sMapEntry.m_bRender) {
 				BSP *b = new BSP(xmlconfig->m_szGamePaths[0] + "maps/" + sMapEntry.m_szName + ".bsp", sMapEntry);
+				b->SetChapterOffset(sChapterEntry.m_fOffsetX, sChapterEntry.m_fOffsetY, sChapterEntry.m_fOffsetZ);
 				totalTris += b->totalTris;
 				maps.push_back(b);
 				mapRenderCount++;

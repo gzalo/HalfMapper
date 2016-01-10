@@ -110,6 +110,7 @@ class BSP{
 		BSP(const string &filename, const MapEntry &sMapEntry);
 		void render();
 		int totalTris;
+		void SetChapterOffset(const float x, const float y, const float z);
 	private:
 		void calculateOffset();
 
@@ -118,6 +119,8 @@ class BSP{
 		GLuint *bufObjects;
 		string mapId;
 		VERTEX offset;
+
+		VERTEX ConfigOffsetChapter;
 };
 
 extern map <string, TEXTURE> textures;
