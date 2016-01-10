@@ -56,11 +56,12 @@ struct MapEntry
 		this->m_bRender = false;
 	}
 
-	bool        m_bRender;  /** Toggle rendering of this chapter. */
-	std::string m_szName;   /** Map name. */
-	float       m_fOffsetX; /** Offset X axis. */
-	float       m_fOffsetY; /** Offset Y axis. */
-	float       m_fOffsetZ; /** Offset Z axis. */
+	bool        m_bRender;            /** Toggle rendering of this chapter. */
+	std::string m_szName;             /** Map name. */
+	std::string m_szOffsetTargetName; /** Target name to search for when applying landmark offsets. */
+	float       m_fOffsetX;           /** Offset X axis. */
+	float       m_fOffsetY;           /** Offset Y axis. */
+	float       m_fOffsetZ;           /** Offset Z axis. */
 };//end MapEntry
 
 

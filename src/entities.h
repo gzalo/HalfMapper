@@ -1,6 +1,8 @@
 #ifndef ENTITIES_H
 #define ENTITIES_H
 
-void parseEntities(const string &str, const string &id);
+struct MapEntry;
+
+void parseEntities(const string &str, const string &id, const MapEntry &sMapEntry);
 
 #endif

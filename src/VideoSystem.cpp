@@ -64,7 +64,7 @@ int VideoSystem::Init()
 
 	unsigned int windowflags = SDL_WINDOW_OPENGL;
 
-	if (m_bFullscreen) {
+	if (this->m_bFullscreen) {
 		windowflags |= SDL_WINDOW_FULLSCREEN;
 	}
 

@@ -172,9 +172,19 @@ XMLError ConfigXML::LoadMapConfig(const char *szFilename)
 			sMapEntry.m_szName  = map->Attribute("name");
 			sMapEntry.m_bRender = map->BoolAttribute("render");
 
-			map->QueryFloatAttribute("x", &sMapEntry.m_fOffsetX);
-			map->QueryFloatAttribute("y", &sMapEntry.m_fOffsetY);
-			map->QueryFloatAttribute("z", &sMapEntry.m_fOffsetZ);
+			if (sMapEntry.m_szName == "") {
+				std::cout << "Malformed XML. Map found without name attribute." << std::endl;
+				return XML_ERROR_FILE_READ_ERROR;
+			}
+
+			XMLElement *offset = map->FirstChildElement("offset");
+
+			if (offset != nullptr) {
+				sMapEntry.m_szOffsetTargetName = offset->Attribute("targetname");
+				offset->QueryFloatAttribute("x", &sMapEntry.m_fOffsetX);
+				offset->QueryFloatAttribute("y", &sMapEntry.m_fOffsetY);
+				offset->QueryFloatAttribute("z", &sMapEntry.m_fOffsetZ);
+			}
 
 			sChapterEntry.m_vMapEntries.push_back(sMapEntry);
 

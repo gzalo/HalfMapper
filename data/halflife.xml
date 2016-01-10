@@ -13,7 +13,7 @@
 		<map name="c0a0e" />
 	</chapter>
 	
-	<chapter name="Anomalous Materials" render="1">
+	<chapter name="Anomalous Materials" render="0">
 		<map name="c1a0" render="1" />
 		<map name="c1a0d" render="1" />
 		<map name="c1a0a" render="1" />
@@ -21,14 +21,16 @@
 		<map name="c1a0e" render="1" />
 	</chapter>
 	
-	<chapter name="Unforseen Concequences" render="0">
-		<map name="c1a0c" />
-		<map name="c1a1" />
-		<map name="c1a1a" />
-		<map name="c1a1f" />
-		<map name="c1a1b" />
-		<map name="c1a1c" />
-		<map name="c1a1d" />
+	<chapter name="Unforseen Concequences" render="1">
+		<map name="c1a0c" render="1"/>
+		<map name="c1a1" render="1"/>
+		<map name="c1a1a" render="1"/>
+		<map name="c1a1f" render="1"/>
+		<map name="c1a1b" render="1">
+			<offset targetname="c1a1b" x="0" y="-96" z="0" />
+		</map>
+		<map name="c1a1c" render="1"/>
+		<map name="c1a1d" render="1"/>
 	</chapter>
 	
 	<chapter name="Office Complex" render="0">

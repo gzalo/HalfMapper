@@ -24,6 +24,8 @@
 #define MAXTEXTURENAME 16
 #define MIPLEVELS 4
 
+struct MapEntry; // Dont include ConfigXML.h here.
+
 struct BSPLUMP{
 	int32_t nOffset; // File offset to data
 	int32_t nLength; // Length of data
@@ -105,7 +107,7 @@ struct TEXSTUFF{
 
 class BSP{
 	public:
-		BSP(const string &filename, const string &id);
+		BSP(const string &filename, const MapEntry &sMapEntry);
 		void render();
 		int totalTris;
 	private:

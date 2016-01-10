@@ -1,6 +1,7 @@
 #include "common.h"
 #include "bsp.h"
 #include "entities.h"
+#include "ConfigXML.h"
 #include <cstring>
 
 map <string, TEXTURE> textures;
@@ -16,7 +17,9 @@ static inline COORDS calcCoords(VERTEX v, VERTEX vs, VERTEX vt, float sShift, fl
 	return ret;
 }
 
-BSP::BSP(const string &filename, const string &id){
+BSP::BSP(const string &filename, const MapEntry &sMapEntry){
+	string id = sMapEntry.m_szName;
+
 	uint8_t gammaTable[256];
 	for(int i=0;i<256;i++)
 		gammaTable[i] = pow(i/255.0,1.0/3.0)*255;
@@ -36,7 +39,7 @@ BSP::BSP(const string &filename, const string &id){
 	inBSP.seekg(bHeader.lump[LUMP_ENTITIES].nOffset, ios::beg);
 	char *bff = new char[bHeader.lump[LUMP_ENTITIES].nLength];
 	inBSP.read(bff, bHeader.lump[LUMP_ENTITIES].nLength);
-	parseEntities(bff,id);
+	parseEntities(bff,id,sMapEntry);
 	delete []bff;
 	
 	//Read Models and hide some faces
@@ -388,7 +391,7 @@ void BSP::calculateOffset(){
 	if(offsets.count(mapId) != 0){
 		offset = offsets[mapId];
 	}else{
-		if(mapId == "c0a0.bsp"){
+		if(mapId == "c0a0"){
 			//Origin for other maps
 			offsets[mapId] = VERTEX(0,0,0);
 		}else{
