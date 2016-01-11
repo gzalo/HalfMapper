@@ -38,6 +38,9 @@ ConfigXML::ConfigXML()
 	this->m_bMultisampling = false;
 	this->m_bVsync         = true;
 
+	this->m_szGamePaths.push_back(HALFLIFE_DEFAULT_GAMEPATH);
+	this->m_szGamePaths.push_back(CSTRIKE_DEFAULT_GAMEPATH);
+
 }//end ConfigXML::ConfigXML()
 
 
@@ -50,6 +53,7 @@ ConfigXML::~ConfigXML()
 	this->m_xmlMapConfig.Clear();
 	this->m_vWads.clear();
 	this->m_vChapterEntries.clear();
+	this->m_szGamePaths.clear();
 
 }//end ConfigXML::~ConfigXML()
 
@@ -79,6 +83,12 @@ XMLError ConfigXML::LoadProgramConfig()
 	}
 
 	XMLElement *window = rootNode->FirstChildElement("window");
+
+	if (window == nullptr) {
+		std::cout << "Malformed XML. No window element." << std::endl;
+		return XML_ERROR_FILE_READ_ERROR;
+	}
+
 	window->QueryUnsignedAttribute("width",         &this->m_iWidth        );
 	window->QueryUnsignedAttribute("height",        &this->m_iHeight       );
 	window->QueryFloatAttribute   ("fov",           &this->m_fFov          );
@@ -90,17 +100,19 @@ XMLError ConfigXML::LoadProgramConfig()
 
 	XMLElement *gamepaths = rootNode->FirstChildElement("gamepaths");
 
-	XMLElement *gamepath = gamepaths->FirstChildElement("gamepath");
+	if (gamepaths != nullptr) {
+		XMLElement *gamepath = gamepaths->FirstChildElement("gamepath");
 
-	while (gamepath != nullptr) {
-		std::string path = gamepath->GetText();
+		while (gamepath != nullptr) {
+			std::string path = gamepath->GetText();
 
-		// Add a trailing slash if none.
-		if (!path.empty() && *path.rbegin() != PATH_DELIM)
-			path += PATH_DELIM;
+			// Add a trailing slash if none.
+			if (!path.empty() && *path.rbegin() != PATH_DELIM)
+				path += PATH_DELIM;
 
-		this->m_szGamePaths.push_back(path);
-		gamepath = gamepath->NextSiblingElement("gamepath");
+			this->m_szGamePaths.push_back(path);
+			gamepath = gamepath->NextSiblingElement("gamepath");
+		}
 	}
 
 	return XML_SUCCESS;

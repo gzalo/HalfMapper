@@ -22,7 +22,7 @@ Counter-Strike 1.6 maps are supported as well!
 
 Video showing the program http://www.youtube.com/watch?v=Hl2HbV3UbMs
 
-**List of overlaps found: https://github.com/gzalo/HalfMapper/blob/master/overlaps.md **
+**List of overlaps found: https://github.com/gzalo/HalfMapper/blob/master/docs/overlaps.md **
 
 ## TODO list (ordered from highest to lowest priority)
 - Try to add other Black Mesa maps to expand the universe: Opposing Force, Blue Shift and Decay might be possible. Other GoldSrc games maps will probably load without problems, such as Counter-Strike.

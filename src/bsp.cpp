@@ -17,7 +17,7 @@ static inline COORDS calcCoords(VERTEX v, VERTEX vs, VERTEX vt, float sShift, fl
 	return ret;
 }
 
-BSP::BSP(const string &filename, const MapEntry &sMapEntry){
+BSP::BSP(const std::vector<std::string> &szGamePaths, const string &filename, const MapEntry &sMapEntry){
 	string id = sMapEntry.m_szName;
 
 	uint8_t gammaTable[256];
@@ -27,7 +27,16 @@ BSP::BSP(const string &filename, const MapEntry &sMapEntry){
 	//Light map atlas
 	lmapAtlas = new uint8_t[1024*1024*3];
 
-	ifstream inBSP(filename.c_str(), ios::binary);
+	ifstream inBSP;
+
+	// Try to open the file from all known gamepaths.
+	for (size_t i = 0; i < szGamePaths.size(); i++) {
+		if (!inBSP.is_open()) {
+			inBSP.open(szGamePaths[i] + filename.c_str(), ios::binary);
+		}
+	}
+
+	// If the BSP wasn't found in any of the gamepaths...
 	if(!inBSP.is_open()){ cerr << "Can't open BSP " << filename << "." << endl; return;}
 	
 	//Check BSP version

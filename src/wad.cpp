@@ -1,9 +1,17 @@
-#include "common.h"
 #include "bsp.h"
 #include "wad.h"
 
-int wadLoad(const string &filename){
-	ifstream inWAD(filename.c_str(), ios::binary);
+int wadLoad(const std::vector<std::string> &szGamePaths, const string &filename) {
+	ifstream inWAD;
+
+	// Try to open the file from all known gamepaths.
+	for (size_t i = 0; i < szGamePaths.size(); i++) {
+		if (!inWAD.is_open()) {
+			inWAD.open(szGamePaths[i] + filename.c_str(), ios::binary);
+		}
+	}
+
+	// If the WAD wasn't found in any of the gamepaths...
 	if(!inWAD.is_open()){ cerr << "Can't load WAD " << filename << "." << endl; return -1; }
 	
 	//Read header

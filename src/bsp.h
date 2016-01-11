@@ -107,7 +107,7 @@ struct TEXSTUFF{
 
 class BSP{
 	public:
-		BSP(const string &filename, const MapEntry &sMapEntry);
+		BSP(const std::vector<std::string> &szGamePaths, const string &filename, const MapEntry &sMapEntry);
 		void render();
 		int totalTris;
 		void SetChapterOffset(const float x, const float y, const float z);
