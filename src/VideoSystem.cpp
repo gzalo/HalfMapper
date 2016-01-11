@@ -26,17 +26,21 @@
 
 /**
  * Set the basic configuration of the window and renderer.
- * \param iWidth      Window width.
- * \param iHeight     Window height.
- * \param fFox        Field of View angle.
- * \param bFullscreen Fullscreen or Windowed mode.
+ * \param iWidth         Window width.
+ * \param iHeight        Window height.
+ * \param fFox           Field of View angle.
+ * \param bFullscreen    Fullscreen or Windowed mode.
+ * \param bMultisampling Enable or disable multisampling.
+ * \param bVsync         Enable or disable Vsync.
  */
-VideoSystem::VideoSystem(int iWidth, int iHeight, float fFov, bool bFullscreen)
+VideoSystem::VideoSystem(int iWidth, int iHeight, float fFov, bool bFullscreen, bool bMultisampling, bool bVsync)
 {
-	m_iWidth      = iWidth;
-	m_iHeight     = iHeight;
-	m_fFov        = fFov;
-	m_bFullscreen = bFullscreen;
+	m_iWidth         = iWidth;
+	m_iHeight        = iHeight;
+	m_fFov           = fFov;
+	m_bFullscreen    = bFullscreen;
+	m_bMultisampling = bMultisampling;
+	m_bVsync         = bVsync;
 
 }//end VideoSystem::VideoSystem()
 
@@ -68,6 +72,8 @@ int VideoSystem::Init()
 		windowflags |= SDL_WINDOW_FULLSCREEN;
 	}
 
+	this->SetMultisampling(this->m_bMultisampling); // Setup multisampling before creating the window.
+
 	this->sdlWindow = SDL_CreateWindow("HalfMapper (loading maps, please wait)", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, this->m_iWidth, this->m_iHeight, windowflags);
 
 	if (this->sdlWindow == NULL) {
@@ -90,7 +96,8 @@ int VideoSystem::Init()
 	}
 
 	SDL_SetRelativeMouseMode(SDL_TRUE);
-	SDL_GL_SetSwapInterval(0); //Disable Vsync.
+
+	this->SetVsync(this->m_bVsync); // Set Vsync after creating the GL context.
 
 	this->SetupViewport();
 
@@ -139,7 +146,7 @@ void VideoSystem::SetupViewport()
 
 	glMatrixMode(GL_PROJECTION);
 	glLoadIdentity();
-		gluPerspective(this->m_fFov, (float)this->m_iWidth / (float)this->m_iHeight, 1.0f, 100000.0f);
+		gluPerspective(this->m_fFov, (float)this->m_iWidth / (float)this->m_iHeight, 20.0f, 50000.0f);
 	glMatrixMode(GL_MODELVIEW);
 	glLoadIdentity();
 
@@ -155,3 +162,37 @@ void VideoSystem::SetupViewport()
 	glEnable(GL_TEXTURE_2D);
 
 }//end VideoSystem::SetupViewport()
+
+
+/**
+ * Enable or disable multisampling for the GL context.
+ * \param bEnable Enable or Disable.
+ */
+void VideoSystem::SetMultisampling(bool bEnable)
+{
+	if (bEnable) {
+		glEnable(GL_MULTISAMPLE);
+		SDL_GL_SetAttribute(SDL_GL_MULTISAMPLEBUFFERS, 1);
+		SDL_GL_SetAttribute(SDL_GL_MULTISAMPLESAMPLES, 4);
+	}
+	else {
+		glDisable(GL_MULTISAMPLE);
+		SDL_GL_SetAttribute(SDL_GL_MULTISAMPLEBUFFERS, 0);
+		SDL_GL_SetAttribute(SDL_GL_MULTISAMPLESAMPLES, 0);
+	}
+
+	this->m_bMultisampling = bEnable;
+
+}//end VideoSystem::SetMultiSampling()
+
+
+/**
+ * Enable or disable Vsync for the GL context.
+ * \param bEnable Enable or Disable.
+ */
+void VideoSystem::SetVsync(bool bEnable)
+{
+	bEnable ? SDL_GL_SetSwapInterval(1) : SDL_GL_SetSwapInterval(0);
+	this->m_bVsync = bEnable;
+
+}//end VideoSystem::SetVsync()

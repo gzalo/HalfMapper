@@ -34,13 +34,15 @@ class VideoSystem
 {
 public:
 	/**
-	* Set the basic configuration of the window and renderer.
-	* \param iWidth      Window width.
-	* \param iHeight     Window height.
-	* \param fFox        Field of View angle.
-	* \param bFullscreen Fullscreen or Windowed mode.
-	*/
-	VideoSystem(int iWidth, int iHeight, float fFov, bool bFullscreen);
+	 * Set the basic configuration of the window and renderer.
+	 * \param iWidth         Window width.
+	 * \param iHeight        Window height.
+	 * \param fFox           Field of View angle.
+	 * \param bFullscreen    Fullscreen or Windowed mode.
+	 * \param bMultisampling Enable or disable multisampling.
+	 * \param bVsync         Enable or disable Vsync.
+	 */
+	VideoSystem(int iWidth, int iHeight, float fFov, bool bFullscreen, bool bMultisampling, bool bVsync);
 
 	/** Destructor */
 	~VideoSystem();
@@ -55,21 +57,35 @@ public:
 	void SwapBuffers();
 
 	/**
-	* Set the title of the program window.
-	* \param szTitle New window title.
-	*/
+	 * Set the title of the program window.
+	 * \param szTitle New window title.
+	 */
 	void SetWindowTitle(const char *szTitle);
 
 private:
 	/** Set the perspective of the viewport, and set some GL hints. */
 	void SetupViewport();
 
-	unsigned int  m_iWidth;      /** Window width. */
-	unsigned int  m_iHeight;     /** Window height. */
-	float         m_fFov;        /** Field of View angle. */
-	bool          m_bFullscreen; /** Fullscreen or Windowed mode. */
-	SDL_Window*   sdlWindow;     /** Pointer to the SDL Window. */
-	SDL_GLContext sdlGLContext;  /** Hold the SDL OpenGL Context. */
+	/**
+	 * Enable or disable multisampling for the GL context.
+	 * \param bEnable Enable or Disable.
+	 */
+	void SetMultisampling(bool bEnable);
+
+	/**
+	* Enable or disable Vsync for the GL context.
+	* \param bEnable Enable or Disable.
+	*/
+	void SetVsync(bool bEnable);
+
+	unsigned int  m_iWidth;         /** Window width. */
+	unsigned int  m_iHeight;        /** Window height. */
+	float         m_fFov;           /** Field of View angle. */
+	bool          m_bFullscreen;    /** Fullscreen or Windowed mode. */
+	bool          m_bMultisampling; /** Multisampling enable or disable. */
+	bool          m_bVsync;         /** Vsync enable or disable. */
+	SDL_Window*   sdlWindow;        /** Pointer to the SDL Window. */
+	SDL_GLContext sdlGLContext;     /** Hold the SDL OpenGL Context. */
 
 };//end VideoSystem
 

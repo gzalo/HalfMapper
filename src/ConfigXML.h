@@ -79,9 +79,9 @@ struct ChapterEntry
 	bool                  m_bRender;     /** Toggle renderin of this entire chapter. */
 	std::string           m_szName;      /** Name of this chapter. */
 	std::vector<MapEntry> m_vMapEntries; /** Vector of maps in this chapter. */
-	float                 m_fOffsetX; /** Offset X axis. */
-	float                 m_fOffsetY; /** Offset Y axis. */
-	float                 m_fOffsetZ; /** Offset Z axis. */
+	float                 m_fOffsetX;    /** Offset X axis. */
+	float                 m_fOffsetY;    /** Offset Y axis. */
+	float                 m_fOffsetZ;    /** Offset Z axis. */
 };//end ChapterEntry
 
 
@@ -112,6 +112,8 @@ public:
 	float                     m_fFov;            /** Field of view angle. */
 	bool                      m_bIsometric;      /** Isometric rendering. */
 	bool                      m_bFullscreen;     /** Fullscreen or Windowed mode. */
+	bool                      m_bMultisampling;  /** Enable or disable multisampling. */
+	bool                      m_bVsync;          /** Enable or disable Vsync. */
 	std::vector<std::string>  m_szGamePaths;     /** Locations of the game files. */
 	// Map config.
 	std::vector<ChapterEntry> m_vChapterEntries; /** Vector of chapters, containing maps. */

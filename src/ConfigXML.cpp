@@ -30,11 +30,13 @@
  */
 ConfigXML::ConfigXML()
 {
-	this->m_iWidth      = 800;
-	this->m_iHeight     = 600;
-	this->m_fFov        = 60.0f;
-	this->m_bIsometric  = false;
-	this->m_bFullscreen = false;
+	this->m_iWidth         = 800;
+	this->m_iHeight        = 600;
+	this->m_fFov           = 60.0f;
+	this->m_bIsometric     = false;
+	this->m_bFullscreen    = false;
+	this->m_bMultisampling = false;
+	this->m_bVsync         = true;
 
 }//end ConfigXML::ConfigXML()
 
@@ -77,11 +79,13 @@ XMLError ConfigXML::LoadProgramConfig()
 	}
 
 	XMLElement *window = rootNode->FirstChildElement("window");
-	window->QueryUnsignedAttribute("width",      &this->m_iWidth     );
-	window->QueryUnsignedAttribute("height",     &this->m_iHeight    );
-	window->QueryFloatAttribute   ("fov",        &this->m_fFov       );
-	window->QueryBoolAttribute    ("isometric",  &this->m_bIsometric );
-	window->QueryBoolAttribute    ("fullscreen", &this->m_bFullscreen);
+	window->QueryUnsignedAttribute("width",         &this->m_iWidth        );
+	window->QueryUnsignedAttribute("height",        &this->m_iHeight       );
+	window->QueryFloatAttribute   ("fov",           &this->m_fFov          );
+	window->QueryBoolAttribute    ("isometric",     &this->m_bIsometric    );
+	window->QueryBoolAttribute    ("fullscreen",    &this->m_bFullscreen   );
+	window->QueryBoolAttribute    ("multisampling", &this->m_bMultisampling);
+	window->QueryBoolAttribute    ("vsync",         &this->m_bVsync        );
 
 
 	XMLElement *gamepaths = rootNode->FirstChildElement("gamepaths");
@@ -214,11 +218,13 @@ XMLError ConfigXML::WriteDefaultProgramConfig()
 	
 	// Window settings.
 	XMLElement *window = this->m_xmlProgramConfig.NewElement("window");
-	window->SetAttribute("width",      this->m_iWidth     );
-	window->SetAttribute("height",     this->m_iHeight    );
-	window->SetAttribute("fov",        this->m_fFov       );
-	window->SetAttribute("isometric",  this->m_bIsometric );
-	window->SetAttribute("fullscreen", this->m_bFullscreen);
+	window->SetAttribute("width",         this->m_iWidth        );
+	window->SetAttribute("height",        this->m_iHeight       );
+	window->SetAttribute("fov",           this->m_fFov          );
+	window->SetAttribute("isometric",     this->m_bIsometric    );
+	window->SetAttribute("fullscreen",    this->m_bFullscreen   );
+	window->SetAttribute("multisampling", this->m_bMultisampling);
+	window->SetAttribute("vsync",         this->m_bVsync        );
 
 	// Collection of game paths.
 	XMLElement *gamepaths = this->m_xmlProgramConfig.NewElement("gamepaths");

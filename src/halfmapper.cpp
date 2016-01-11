@@ -15,7 +15,14 @@ int main(int argc, char **argv){
 		xmlconfig->LoadMapConfig("halflife.xml");
 	}
 
-	VideoSystem *videosystem = new VideoSystem(xmlconfig->m_iWidth, xmlconfig->m_iHeight, xmlconfig->m_fFov, xmlconfig->m_bFullscreen);
+	VideoSystem *videosystem = new VideoSystem(
+		xmlconfig->m_iWidth,
+		xmlconfig->m_iHeight,
+		xmlconfig->m_fFov,
+		xmlconfig->m_bFullscreen,
+		xmlconfig->m_bMultisampling,
+		xmlconfig->m_bVsync
+	);
 
 	if(videosystem->Init() == -1) return -1;
 

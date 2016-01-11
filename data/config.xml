@@ -1,5 +1,5 @@
 <config>
-    <window width="800" height="600" fov="60" isometric="0" fullscreen="0"/>
+    <window width="800" height="600" fov="60" isometric="0" fullscreen="0" multisampling="1" vsync="0"/>
     <gamepaths>
         <gamepath name="halflife">D:\Games\Steam\steamapps\common\Half-Life\valve\</gamepath>
         <gamepath name="cstrike">D:\Games\Steam\steamapps\common\Half-Life\valve\cstrike</gamepath>

@@ -250,7 +250,7 @@ BSP::BSP(const string &filename, const MapEntry &sMapEntry){
 	}
 		
 	int lmapRover[1024]; memset(lmapRover, 0, 1024*4);
-	
+
 	//Light map "rover" algorithm from Quake 2 (http://fabiensanglard.net/quake2/quake2_opengl_renderer.php)
 	for(unsigned int i=0;i<lmaps.size();i++){
 		int best=1024, best2;
@@ -290,7 +290,7 @@ BSP::BSP(const string &filename, const MapEntry &sMapEntry){
 			lmapAtlas[ATXY(finalX+x, finalY+y)+2] = gammaTable[lmaps[i].offset[LMXY(x,y)+2]];
 		}
 	}
-	
+
 	//Load the actual triangles
 	
 	inBSP.seekg(bHeader.lump[LUMP_FACES].nOffset, ios::beg);
