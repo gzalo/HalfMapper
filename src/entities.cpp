@@ -32,8 +32,8 @@ void parseEntities(const string &szStr, const string &id, const MapEntry &sMapEn
 					VERTEX v(x,y,z);
 					v.fixHand();
 					
-					if(sMapEntry.m_szOffsetTargetName == "c1a1b" && sMapEntry.m_szName == "c1a1b") {
-						//The original map landmark is wrong, and c1a1f ends up being bellow c1a1b
+					if (sMapEntry.m_szOffsetTargetName == targetname) {
+						// Apply map offsets from the config, to fix landmark positions.
 						v.x += sMapEntry.m_fOffsetX;
 						v.y += sMapEntry.m_fOffsetY;
 						v.z += sMapEntry.m_fOffsetZ;
