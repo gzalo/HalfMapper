@@ -1,38 +1,61 @@
 #include "common.h"
-#include "video.h"
+#include "VideoSystem.h"
 #include "wad.h"
 #include "bsp.h"
-#include "config.h"
+#include "ConfigXML.h"
 
 int main(int argc, char **argv){
-	Config cfg;
+	ConfigXML *xmlconfig = new ConfigXML();
+
+	xmlconfig->LoadProgramConfig();
+
 	if(argc >= 2){
-		cfg = Config(argv[1]);
+		xmlconfig->LoadMapConfig(argv[1]);
 	}else{
-		cfg = Config("config.ini");
+		xmlconfig->LoadMapConfig("halflife.xml");
 	}
-	
-	if(videoInit(cfg.w,cfg.h,cfg.fov) == -1) return -1;
+
+	VideoSystem *videosystem = new VideoSystem(
+		xmlconfig->m_iWidth,
+		xmlconfig->m_iHeight,
+		xmlconfig->m_fFov,
+		xmlconfig->m_bFullscreen,
+		xmlconfig->m_bMultisampling,
+		xmlconfig->m_bVsync
+	);
+
+	if(videosystem->Init() == -1) return -1;
 
 	//Texture loading
-	for(size_t i=0;i<cfg.wads.size();i++){
-		if(wadLoad(cfg.gamePath+cfg.wads[i]) == -1) return -1;
+	for(size_t i=0;i<xmlconfig->m_vWads.size();i++){
+		if(wadLoad(xmlconfig->m_szGamePaths, xmlconfig->m_vWads[i] + ".wad") == -1) return -1;
 	}
 
 	//Map loading
 	vector <BSP*> maps;
 	
-	int t = SDL_GetTicks(), mapAmount=0;
+	int t = SDL_GetTicks(), mapCount = 0, mapRenderCount = 0;
 	int totalTris=0;
 	
-	for(unsigned int i=0;i<cfg.maps.size();i++){
-		BSP *b = new BSP(cfg.gamePath+"maps/"+cfg.maps[i],cfg.maps[i]); 
-		totalTris += b->totalTris;
-		maps.push_back(b);
-		mapAmount++;
+	for(unsigned int i = 0; i < xmlconfig->m_vChapterEntries.size(); i++) {
+		for (unsigned int j = 0; j < xmlconfig->m_vChapterEntries[i].m_vMapEntries.size(); j++) {
+			ChapterEntry sChapterEntry = xmlconfig->m_vChapterEntries[i];
+			MapEntry sMapEntry = xmlconfig->m_vChapterEntries[i].m_vMapEntries[j];
+
+			if (sChapterEntry.m_bRender && sMapEntry.m_bRender) {
+				BSP *b = new BSP(xmlconfig->m_szGamePaths, "maps/" + sMapEntry.m_szName + ".bsp", sMapEntry);
+				b->SetChapterOffset(sChapterEntry.m_fOffsetX, sChapterEntry.m_fOffsetY, sChapterEntry.m_fOffsetZ);
+				totalTris += b->totalTris;
+				maps.push_back(b);
+				mapRenderCount++;
+			}
+
+			mapCount++;
+		}
 	}
 	
-	cout << mapAmount << " maps loaded in " << SDL_GetTicks()-t << " ms." << endl;
+	cout << mapCount << " maps found in config file." << endl;
+	cout << mapRenderCount << " maps to render - loaded in " << SDL_GetTicks()-t << " ms." << endl;
 	cout << "Total triangles: " << totalTris << endl;
 
 	//---
@@ -72,8 +95,8 @@ int main(int argc, char **argv){
 				if(event.key.keysym.sym == SDLK_LCTRL) kc=0;
 			}
 			if(event.type == SDL_MOUSEMOTION){
-				rotation[0] += event.motion.xrel/15.0;
-				rotation[1] += event.motion.yrel/15.0;
+				rotation[0] += event.motion.xrel/15.0f;
+				rotation[1] += event.motion.yrel/15.0f;
 			}
 		}
 
@@ -86,34 +109,34 @@ int main(int argc, char **argv){
 		//Velocities
 		int vsp = kr?32:(kc?2:8), hsp = kr?32:(kc?2:8);
 		
-		int m_left = 0, m_frontal = 0;
+		float m_left = 0.0f, m_frontal = 0.0f;
 			
 		if(kw) m_frontal++;
 		if(ks) m_frontal--;
 		if(ka) m_left++;
 		if(kd) m_left--;
 		
-		if(cfg.isometric){
+		if(xmlconfig->m_bIsometric){
 			position[2] += m_left * hsp;
 			position[1] += m_frontal * hsp;
 			
-			if(ke) isoBounds += vsp * 10.0;
-			if(kq) isoBounds -= vsp * 10.0;
+			if(ke) isoBounds += vsp * 10.0f;
+			if(kq) isoBounds -= vsp * 10.0f;
 			isoBounds = max(10.0f, isoBounds);
 		}else{
 			if(m_frontal || m_left){
-				float rotationF = rotation[0]* M_PI / 180.0f + atan2(m_frontal, m_left);
+				float rotationF = rotation[0]* (float)M_PI / 180.0f + atan2(m_frontal, m_left);
 				position[0] -= hsp * cos(rotationF);
 				position[2] -= hsp * sin(rotationF);
 			}
 			if(ke) position[1] += vsp;
 			if(kq) position[1] -= vsp;
 		}
+
+		videosystem->ClearBuffer();
 		
 		//Camera setup
-		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-		
-		if(cfg.isometric){
+		if(xmlconfig->m_bIsometric){
 			glMatrixMode(GL_PROJECTION);
 			glLoadIdentity();
 			glOrtho(-isoBounds, isoBounds, -isoBounds, isoBounds, -100000.0, 100000.0);
@@ -133,12 +156,10 @@ int main(int argc, char **argv){
 		}
 		//Map render
 		for(size_t i=0;i<maps.size();i++){
-			if(cfg.drawChapter[cfg.mapChapters[maps[i]->getId()]])
-				maps[i]->render();	
+			maps[i]->render();	
 		}
 
-		//SDL_Delay(1);
-		SDL_GL_SwapWindow(sdlWindow);
+		videosystem->SwapBuffers();
 
 		frame++;
 		if(frame==30){
@@ -149,7 +170,7 @@ int main(int argc, char **argv){
 			oldMs = SDL_GetTicks();
 			char bf[64];
 			sprintf(bf, "%.2f FPS - %.2f %.2f %.2f", 30000.0f/(float)dt, position[0], position[1], position[2]);
-			SDL_SetWindowTitle(sdlWindow, bf);
+			videosystem->SetWindowTitle(bf);
 		}
 	}
 	SDL_Quit();

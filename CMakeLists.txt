@@ -17,13 +17,13 @@ include_directories(${SDL2_INCLUDE_DIR} ${OPENGL_INCLUDE_DIR} ${GLEW_INCLUDE_DIR
 #Set the CXXFLAGS for Clang, GCC or MINGW.
 #Should cover OSX, Linux and MINGW Windows
 if(UNIX OR MINGW)
-  set(CMAKE_CXX_FLAGS "-O2 -Wall -Wpedantic -Wextra")
+  set(CMAKE_CXX_FLAGS "-std=c++0x -O2 -Wall -Wpedantic -Wextra")
 endif(UNIX OR MINGW)
 
 
 #Set compiller flags when on MSVC Windows.
 if(MSVC)
-  add_definitions("/O2 /W4")
+  add_definitions("/W4 /D_CRT_SECURE_NO_WARNINGS")
 endif(MSVC)
 
 
@@ -33,6 +33,14 @@ file(GLOB SOURCE_FILES
     "src/*.cpp"
 )
 
+file(GLOB TINYXML2_FILES
+	"thirdparty/tinyxml2/tinyxml2.cpp"
+	"thirdparty/tinyxml2/tinyxml2.h"
+)
+
+#Make sure tinyxml is in its own group in Visual Studio, and in the include path.
+SOURCE_GROUP(tinyxml2 FILES ${TINYXML2_FILES})
+include_directories("thirdparty/tinyxml2")
 
 #Add Windows resources.
 if(MSVC OR MINGW)
@@ -42,7 +50,7 @@ if(MSVC OR MINGW)
   )
 endif(MSVC OR MINGW)
 
-add_executable(${PROJECT_NAME} ${SOURCE_FILES} ${RESOURCE_FILES})
+add_executable(${PROJECT_NAME} ${SOURCE_FILES} ${TINYXML2_FILES} ${RESOURCE_FILES})
 
 
 #Add link libraries.

@@ -1,6 +1,7 @@
 #include "common.h"
 #include "bsp.h"
 #include "entities.h"
+#include "ConfigXML.h"
 #include <cstring>
 
 map <string, TEXTURE> textures;
@@ -16,7 +17,9 @@ static inline COORDS calcCoords(VERTEX v, VERTEX vs, VERTEX vt, float sShift, fl
 	return ret;
 }
 
-BSP::BSP(const string &filename, const string &id){
+BSP::BSP(const std::vector<std::string> &szGamePaths, const string &filename, const MapEntry &sMapEntry){
+	string id = sMapEntry.m_szName;
+
 	uint8_t gammaTable[256];
 	for(int i=0;i<256;i++)
 		gammaTable[i] = pow(i/255.0,1.0/3.0)*255;
@@ -24,7 +27,16 @@ BSP::BSP(const string &filename, const string &id){
 	//Light map atlas
 	lmapAtlas = new uint8_t[1024*1024*3];
 
-	ifstream inBSP(filename.c_str(), ios::binary);
+	ifstream inBSP;
+
+	// Try to open the file from all known gamepaths.
+	for (size_t i = 0; i < szGamePaths.size(); i++) {
+		if (!inBSP.is_open()) {
+			inBSP.open(szGamePaths[i] + filename.c_str(), ios::binary);
+		}
+	}
+
+	// If the BSP wasn't found in any of the gamepaths...
 	if(!inBSP.is_open()){ cerr << "Can't open BSP " << filename << "." << endl; return;}
 	
 	//Check BSP version
@@ -36,7 +48,7 @@ BSP::BSP(const string &filename, const string &id){
 	inBSP.seekg(bHeader.lump[LUMP_ENTITIES].nOffset, ios::beg);
 	char *bff = new char[bHeader.lump[LUMP_ENTITIES].nLength];
 	inBSP.read(bff, bHeader.lump[LUMP_ENTITIES].nLength);
-	parseEntities(bff,id);
+	parseEntities(bff,id,sMapEntry);
 	delete []bff;
 	
 	//Read Models and hide some faces
@@ -247,7 +259,7 @@ BSP::BSP(const string &filename, const string &id){
 	}
 		
 	int lmapRover[1024]; memset(lmapRover, 0, 1024*4);
-	
+
 	//Light map "rover" algorithm from Quake 2 (http://fabiensanglard.net/quake2/quake2_opengl_renderer.php)
 	for(unsigned int i=0;i<lmaps.size();i++){
 		int best=1024, best2;
@@ -287,7 +299,7 @@ BSP::BSP(const string &filename, const string &id){
 			lmapAtlas[ATXY(finalX+x, finalY+y)+2] = gammaTable[lmaps[i].offset[LMXY(x,y)+2]];
 		}
 	}
-	
+
 	//Load the actual triangles
 	
 	inBSP.seekg(bHeader.lump[LUMP_FACES].nOffset, ios::beg);
@@ -388,7 +400,7 @@ void BSP::calculateOffset(){
 	if(offsets.count(mapId) != 0){
 		offset = offsets[mapId];
 	}else{
-		if(mapId == "c0a0.bsp"){
+		if(mapId == "c0a0"){
 			//Origin for other maps
 			offsets[mapId] = VERTEX(0,0,0);
 		}else{
@@ -443,7 +455,7 @@ void BSP::render(){
 	calculateOffset();
 	
 	glPushMatrix();
-	glTranslatef(offset.x, offset.y, offset.z);
+	glTranslatef(offset.x + ConfigOffsetChapter.x, offset.y + ConfigOffsetChapter.y, offset.z + ConfigOffsetChapter.z);
 
 	glEnableClientState(GL_VERTEX_ARRAY);
 	glEnableClientState(GL_TEXTURE_COORD_ARRAY);
@@ -485,7 +497,9 @@ void BSP::render(){
 	glPopMatrix();
 }
 
-const string &BSP::getId(){
-	return mapId;
+void BSP::SetChapterOffset(const float x, const float y, const float z)
+{
+	ConfigOffsetChapter.x = x;
+	ConfigOffsetChapter.y = y;
+	ConfigOffsetChapter.z = z;
 }
-

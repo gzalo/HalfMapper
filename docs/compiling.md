@@ -19,6 +19,14 @@ export CC=/usr/bin/clang
 export CXX=/usr/bin/clang++
 ```
 
+Before starting, you will need to clone the repository, and prepare the submodules:
+```shell
+git clone https://github.com/gzalo/halfmapper halfmapper-src
+cd halfmapper-src
+git submodule init
+git submodule update
+```
+
 ## Windows Visual Studio
 **Prerequisites**
 * [SDL2 2.0.x Development Libraries For Visual Studio](http://libsdl.org/release/SDL2-devel-2.0.4-VC.zip)

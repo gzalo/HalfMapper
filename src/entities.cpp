@@ -1,8 +1,9 @@
 #include "common.h"
 #include "bsp.h"
+#include "ConfigXML.h"
 
-void parseEntities(const string &str, const string &id){
-	stringstream ss(str);
+void parseEntities(const string &szStr, const string &id, const MapEntry &sMapEntry){
+	stringstream ss(szStr);
 	
 	int status = 0;
 	
@@ -31,9 +32,11 @@ void parseEntities(const string &str, const string &id){
 					VERTEX v(x,y,z);
 					v.fixHand();
 					
-					if(targetname == "c1a1b" && id == "c1a1b.bsp"){
-						//The original map landmark is wrong, and c1a1f ends up being bellow c1a1b
-						v.y -= 96.0f;
+					if (sMapEntry.m_szOffsetTargetName == targetname) {
+						// Apply map offsets from the config, to fix landmark positions.
+						v.x += sMapEntry.m_fOffsetX;
+						v.y += sMapEntry.m_fOffsetY;
+						v.z += sMapEntry.m_fOffsetZ;
 					}
 					
 					ret[targetname] = v;

@@ -1,6 +1,8 @@
 #ifndef WAD_H
 #define WAD_H
 
+#include <vector>
+
 //Extracted from http://hlbsp.sourceforge.net/index.php?content=waddef
 
 struct WADHEADER{
@@ -19,6 +21,6 @@ struct WADDIRENTRY{
 	char szName[16]; // must be null terminated
 };
 
-int wadLoad(const string &filename);
+int wadLoad(const std::vector<std::string> &szGamePaths, const string &filename);
 
 #endif

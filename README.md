@@ -8,7 +8,7 @@ It allows for realtime rendering of the Black Mesa Research Facility.
 ## Download
 The latest binary for Windows can be downloaded here: http://gzalo.com/halfmapper_en/
 
-The configuration file (config.ini) lets you modify which chapters are rendered, as well as changing a few settings (FOV, resolution). Another config file can be created in order to load maps from other GoldSrc games, for instance check config_cstrike.ini. In order to load another config file, drag and drop it to the executable (or pass it in the commandline as an argument).
+The configuration file, config.xml, lets you set a few settings (FOV, resolution). Another config file can be created in order to load maps from GoldSrc games, for instance check halflife.xml. In order to load another config file, drag and drop it to the executable (or pass it in the commandline as an argument).
 
 **It needs a Half Life installation**
 If using the WON version, PAK files will have to be extracted. The map folder and files halflife.wad and liquids.wad are needed for the program to run. WON is untested, so please report any issues.
@@ -22,16 +22,14 @@ Counter-Strike 1.6 maps are supported as well!
 
 Video showing the program http://www.youtube.com/watch?v=Hl2HbV3UbMs
 
-**List of overlaps found: https://github.com/gzalo/HalfMapper/blob/master/overlaps.md **
+**List of overlaps found: https://github.com/gzalo/HalfMapper/blob/master/docs/overlaps.md **
 
 ## TODO list (ordered from highest to lowest priority)
 - Try to add other Black Mesa maps to expand the universe: Opposing Force, Blue Shift and Decay might be possible. Other GoldSrc games maps will probably load without problems, such as Counter-Strike.
 
 - Fixing areas that overlap (map loading sections) that cause z-fighting and some extra walls
 
-- Improve code, clean up some stuff and use newer versions of libraries (SDL2, OpenGL3)
-
-- Provide a better interface, allow for map position fine-tuning and disable certain maps 
+- Improve code, clean up some stuff and use newer OpenGL3.
 
 ## Used libraries
 - SDL for window and event management
@@ -39,3 +37,5 @@ Video showing the program http://www.youtube.com/watch?v=Hl2HbV3UbMs
 - OpenGL and GLU for rendering
 
 - GLEW for easy extension access
+
+- TinyXML2 for configuration files

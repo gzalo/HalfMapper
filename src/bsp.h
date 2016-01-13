@@ -24,6 +24,8 @@
 #define MAXTEXTURENAME 16
 #define MIPLEVELS 4
 
+struct MapEntry; // Dont include ConfigXML.h here.
+
 struct BSPLUMP{
 	int32_t nOffset; // File offset to data
 	int32_t nLength; // Length of data
@@ -105,10 +107,10 @@ struct TEXSTUFF{
 
 class BSP{
 	public:
-		BSP(const string &filename, const string &id);
+		BSP(const std::vector<std::string> &szGamePaths, const string &filename, const MapEntry &sMapEntry);
 		void render();
-		const string &getId();
 		int totalTris;
+		void SetChapterOffset(const float x, const float y, const float z);
 	private:
 		void calculateOffset();
 
@@ -117,6 +119,8 @@ class BSP{
 		GLuint *bufObjects;
 		string mapId;
 		VERTEX offset;
+
+		VERTEX ConfigOffsetChapter;
 };
 
 extern map <string, TEXTURE> textures;
