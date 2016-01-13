@@ -29,14 +29,14 @@
 
 
 // Set the default game paths for Half Life.
-#ifdef _MSC_VER
+#if defined(_MSC_VER) || defined(__MINGW32__)
 	#define PATH_DELIM '\\'
 	#define HALFLIFE_DEFAULT_GAMEPATH "C:\\Program Files (x86)\\Steam\\steamapps\\common\\Half-Life\\valve\\"
-#endif
-
-#ifdef __linux__
+#elif defined(__linux__)
 	#define PATH_DELIM '/'
 	#define HALFLIFE_DEFAULT_GAMEPATH "~/.steam/steamapps/common/Half-Life/valve/"
+#else
+	#error Platform not supported!
 #endif
 
 // CStrike default path is derrived from HL.
